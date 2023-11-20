@@ -1,6 +1,9 @@
-class Main {
-    public static void main(String [] args) {
+import java.io.Console;
 
+public class ContactsApp {
+    public static void main(String [] args) {
+        Console c = System.console();
+        
     }
 }
 
