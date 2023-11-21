@@ -4,10 +4,10 @@ public class ContactsApp {
     public static void main(String [] args) {
         Console c = System.console();
         Boolean shutDown = false;
-
+        
+        System.out.println("Welcome!");
+        System.out.println("Please input your desired choice with a number");
         while(!shutDown) {
-            System.out.println("Welcome!");
-            System.out.println("Please input your desired choice with a number");
             System.out.println("1. View contacts, 2. Add contacts, 3. Edit or Delete contacts, 4. Exit");
         
             String userC = System.console().readLine();
