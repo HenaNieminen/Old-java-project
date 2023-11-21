@@ -8,8 +8,10 @@ public class ContactsApp {
         System.out.println("Welcome!");
         System.out.println("Please input your desired choice with a number");
         while(!shutDown) {
-            System.out.println("1. View contacts, 2. Add contacts, 3. Edit or Delete contacts, 4. Exit");
-        
+            System.out.println("1. View contacts");
+            System.out.println("2. Add contacts");
+            System.out.println("3. Edit or Delete contacts");
+            System.out.println("4. Exit");
             String userC = System.console().readLine();
             switch (userC) {
                 case "1":
