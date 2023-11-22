@@ -11,12 +11,7 @@ class Info {
 
     public Info(String id, String firstName, String lastName, 
     String phone, String address, String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.address = address;
-        this.email = email;
+        addContact();
     }
     public static void addContact() {
         System.out.println("(Optional) Give the ID of the contact");
