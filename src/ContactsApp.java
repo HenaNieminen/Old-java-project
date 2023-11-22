@@ -17,6 +17,7 @@ public class ContactsApp {
                 case "1":
                     break;
                 case "2":
+                    Info.addContact();
                     break;
                 case "3":
                     break;
