@@ -58,6 +58,9 @@ class Info implements Serializable {
             e.printStackTrace();
         }
     }
+    public static boolean validId(String id) {¨
+        String regex = 
+    }
 }
 
 //This is the class which contains the user given information and stores them to a file.
