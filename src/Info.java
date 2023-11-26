@@ -58,8 +58,20 @@ class Info implements Serializable {
             e.printStackTrace();
         }
     }
-    public static boolean validId(String id) {¨
-        String regex = 
+    public static boolean validId(String id) {
+        String regex = "[0-3]{1}[1-9]{1}[0-9]{2}+[-A][0-9]{3}[A-Z]{1}";
+        Pattern valid = Pattern.compile(regex);
+        Matcher idmatch =  valid.matcher(id);
+        return idmatch.matches();
+    }
+    public static boolean validFirstName(String firstName) {
+        String regex = "[A-Z]{20}"
+        Pattern valid = Pattern.compile(regex);
+        Matcher firstMatch = valid.matcher(firstName);
+        return firstMatch.matches();
+    }
+    public static boolean validLastName(String lastName) {
+        String regex =;
     }
 }
 

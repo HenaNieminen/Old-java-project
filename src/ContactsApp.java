@@ -2,7 +2,7 @@ import java.io.*;
 
 public class ContactsApp {
     public static void main(String [] args) {
-        Console c = System.console();
+        Console console = System.console();
         Boolean shutDown = false;
         Info newContact = new Info(null, null, null, null, null, null);
         
@@ -14,8 +14,8 @@ public class ContactsApp {
             System.out.println("3. Edit contacts");
             System.out.println("4. Delete contacts");
             System.out.println("5. Exit");
-            String userC = System.console().readLine();
-            switch (userC) {
+            String userChoice = System.console().readLine();
+            switch (userChoice) {
                 case "1":
                     break;
                 case "2":
