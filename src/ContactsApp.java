@@ -36,6 +36,9 @@ public class ContactsApp {
             }
         }
     }
+    public static void newContact(); {
+
+    }
 }
 //20.11.2023
 //The main hub of the code which will call all classes and methods and execute them for the user
