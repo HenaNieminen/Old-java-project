@@ -5,6 +5,7 @@ public class ContactsApp {
         Console console = System.console();
         Boolean shutDown = false;
         Info newContact = new Info(null, null, null, null, null, null);
+        ArrayList<String[]> contacts = new ArrayList();
         
         System.out.println("Welcome!");
         System.out.println("Please input your desired choice with a number");
@@ -19,7 +20,7 @@ public class ContactsApp {
                 case "1":
                     break;
                 case "2":
-                    newContact.addContact();
+                    newContact.addContact(contacts);
                     break;
                 case "3":
                     break;
