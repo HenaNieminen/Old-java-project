@@ -36,7 +36,7 @@ class Info implements Serializable {
         return id + "," + firstName + "," + lastName + "," + phone + ", " + "," + address + "," + email;
     }
 
-    public void addContact(Arraylist<String[]> contacts) {
+    public void addContact() {
         System.out.println("Give the ID of the contact");
         this.id = System.console().readLine();
         System.out.println("Give the first name");
@@ -48,7 +48,27 @@ class Info implements Serializable {
         System.out.println("(Opt.) Give the email");
         this.email = System.console().readLine();
         System.out.println("Contact added!");
-        contacts.add(this);
+        try {
+            FileOutputStream fos = new FileOutputStream(new File("contacts.txt"));
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(this);
+            oos.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void readContact() {
+        try {
+            FileInputStream fis = new FileInputStream(new File("contacts.txt"));
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            newContact = (Info) ois.readObject();
+            System.out.println(newContact.toString());
+            ois.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

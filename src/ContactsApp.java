@@ -5,8 +5,8 @@ public class ContactsApp {
         Console console = System.console();
         Boolean shutDown = false;
         Info newContact = new Info(null, null, null, null, null, null);
-        ArrayList<String[]> contacts = new ArrayList();
-        
+
+
         System.out.println("Welcome!");
         System.out.println("Please input your desired choice with a number");
         while(!shutDown) {
@@ -18,9 +18,10 @@ public class ContactsApp {
             String userChoice = System.console().readLine();
             switch (userChoice) {
                 case "1":
+                    newContact.readContact();
                     break;
                 case "2":
-                    newContact.addContact(contacts);
+                    newContact.addContact();
                     break;
                 case "3":
                     break;
