@@ -48,26 +48,19 @@ class Info implements Serializable {
         System.out.println("(Opt.) Give the email");
         this.email = System.console().readLine();
         System.out.println("Contact added!");
-        try {
-            FileOutputStream fos = new FileOutputStream(new File("contacts.txt"));
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(this);
-            oos.close();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     public void readContact() {
-        try {
-            FileInputStream fis = new FileInputStream(new File("contacts.txt"));
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            newContact = (Info) ois.readObject();
-            System.out.println(newContact.toString());
-            ois.close();
-            fis.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        
+    }
+    public static void createContactFile() {
+        File contact = new File("contacts.txt");
+        
+        if(!contact.exists()) {
+            try {
+                contact.createNewFile();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

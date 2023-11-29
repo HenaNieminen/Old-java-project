@@ -15,3 +15,6 @@ class Control {
         return firstMatch.matches();
     }
 }
+
+// Decided to switch regex and validation to a separate Control class. Just to keep things more clearer
+// May get changed and consolidated again

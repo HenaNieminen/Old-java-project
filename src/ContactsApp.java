@@ -5,7 +5,7 @@ public class ContactsApp {
         Console console = System.console();
         Boolean shutDown = false;
         Info newContact = new Info(null, null, null, null, null, null);
-
+        Info.createContactFile();
 
         System.out.println("Welcome!");
         System.out.println("Please input your desired choice with a number");
@@ -18,7 +18,6 @@ public class ContactsApp {
             String userChoice = System.console().readLine();
             switch (userChoice) {
                 case "1":
-                    newContact.readContact();
                     break;
                 case "2":
                     newContact.addContact();
@@ -36,9 +35,6 @@ public class ContactsApp {
             }
         }
     }
-    public static void newContact(); {
-
-    }
 }
 //20.11.2023
 //The main hub of the code which will call all classes and methods and execute them for the user
@@ -47,3 +43,12 @@ public class ContactsApp {
 //to stop. The empty selections will call the respective classes and methods once done.
 //Decided to use string instead of int for the user input to avoid making too much of a mess with exception
 //catching. If it gets hairy down the line, I will probably change things around.
+
+//29.11.2023
+//I managed to figure out how to create files and made a method that creates it if not present
+//However, getting the contacts added there is a new hiccup since the object referred here
+//doesn't change depending on how many people were saved on the file, so there effectively is just one
+//contact slot. (And unreadable at that)
+//I need to make a method that scans the file for objects and creates the contact in a way that
+//increments numbers into the creation
+//
