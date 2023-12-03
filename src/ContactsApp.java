@@ -1,14 +1,16 @@
 import java.io.*;
+import java.util.ArrayList;
 
 public class ContactsApp {
     public static void main(String [] args) {
         Console console = System.console();
         Boolean shutDown = false;
         Info newContact = new Info(null, null, null, null, null, null);
-        Info.createContactFile();
-
+        //Start of the main method calls all essential methods from all other classes 
+        
         System.out.println("Welcome!");
         System.out.println("Please input your desired choice with a number");
+        //A simple while loop I don't foresee changing soon.
         while(!shutDown) {
             System.out.println("1. View contacts");
             System.out.println("2. Add contacts");
@@ -18,6 +20,7 @@ public class ContactsApp {
             String userChoice = System.console().readLine();
             switch (userChoice) {
                 case "1":
+                    Info.readContact();
                     break;
                 case "2":
                     newContact.addContact();
