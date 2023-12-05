@@ -124,7 +124,8 @@ public class ContactsApp implements Serializable {
                     exit = true;
                     break;
                 default :
-                    return;
+                    System.out.println("Invalid input");
+                    break;
             }
         }
     }
