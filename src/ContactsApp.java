@@ -76,7 +76,7 @@ public class ContactsApp implements Serializable {
             String readChoice = System.console().readLine();
             switch (readChoice) {
                 case "1":
-                    
+
                     break;
                 case "2":
                     System.out.println("Not yet implemented.");
@@ -85,8 +85,7 @@ public class ContactsApp implements Serializable {
                     return;
             }
         }
-        //This switch is dumb :D. At least it works the way it is supposed to by not instantly printing the
-        //main menu
+        
     }
     public static void addContact() {
         System.out.println("Give the ID of the contact");
