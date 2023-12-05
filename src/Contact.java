@@ -14,7 +14,8 @@ class Contact implements Serializable { //Class renamed to reflect it more clear
 
     public Contact(String id, String firstName, String lastName, 
     String phoneNumber, String address, String email) {
-        //Constructor works by initializing values given to it
+        //Constructor works by initializing values given to it by the addContact method
+        //in contactsApp class.
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +24,7 @@ class Contact implements Serializable { //Class renamed to reflect it more clear
         this.email = email;
     }
     //Getter methods
+    //May or may not be used. Will stay here just in case
     public String getId() {
         return id;
     }

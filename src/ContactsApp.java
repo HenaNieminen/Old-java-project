@@ -1,23 +1,27 @@
 import java.io.*;
 import java.util.ArrayList;
 
+//I've supressed the warnings for the time being. It complains about the checkfile method
+//and unchecked casts.
+//I also have to figure out a better way to display saved contacts and optimize the method
+//to checking the file. My reliance on arraylist and ObjectStream may be a bit of a problem
+@SuppressWarnings("unchecked")
 public class ContactsApp implements Serializable {
     //File systems and OOS is private static so they will be the same for each method
     //It also wont work without them being so
     public static ArrayList<Contact> contactsList = new ArrayList<Contact>();
     public static File contacts = new File("contacts.txt");
     public static ObjectOutputStream oos;
+    public static ObjectInputStream ois;
 
 
-    public static void main(String [] args) {
+    public static void main(String [] args) throws Exception {
         Console console = System.console();
         Boolean shutDown = false;
-        Contact newContact = new Contact(null, null, null, null, null, null);
-        //Start of the main method calls all essential methods from all other classes 
-        
+        checkFile();
+
         System.out.println("Welcome!");
         System.out.println("Please input your desired choice with a number");
-        //A simple while loop I don't foresee changing soon.
         while(!shutDown) {
             System.out.println("1. View contacts");
             System.out.println("2. Add contacts");
@@ -30,7 +34,7 @@ public class ContactsApp implements Serializable {
                     readContact();
                     break;
                 case "2":
-                    addContact(newContact);
+                    addContact();
                     break;
                 case "3":
                     break;
@@ -45,30 +49,44 @@ public class ContactsApp implements Serializable {
             }
         }
     }
+    public static void checkFile() throws Exception {
+        if(contacts.isFile()) {
+            try {
+                ois = new ObjectInputStream(new FileInputStream(contacts));
+                contactsList = (ArrayList<Contact>)ois.readObject();
+                ois.close();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void readContact() {
         System.out.println(contactsList);
-        System.out.println("Enter anything to continue");
+        System.out.println("Press enter to continue");
         String readChoice = System.console().readLine();
         switch (readChoice) {
             default :
                 return;
         }
+        //This switch is dumb :D. At least it works the way it is supposed to by not instantly printing the
+        //main menu
     }
-    public static void addContact(Contact a) {
+    public static void addContact() {
         System.out.println("Give the ID of the contact");
-        a.id = System.console().readLine();
+        String id = System.console().readLine();
         System.out.println("Give the first name");
-        a.firstName = System.console().readLine();
+        String firstName = System.console().readLine();
         System.out.println("Give the last name");
-        a.lastName = System.console().readLine();
+        String lastName = System.console().readLine();
         System.out.println("Give the phone number");
-        a.phoneNumber = System.console().readLine();
+        String phoneNumber = System.console().readLine();
         System.out.println("(Opt.)Give the address");
-        a.address = System.console().readLine();
+        String address = System.console().readLine();
         System.out.println("(Opt.) Give the email");
-        a.email = System.console().readLine();
+        String email = System.console().readLine();
         System.out.println("Contact added!");
-        contactsList.add(new Contact(a.id,a.firstName,a.lastName,a.phoneNumber,a.address,a.email));
+        contactsList.add(new Contact(id, firstName, lastName, phoneNumber, address, email));
         try{
             oos = new ObjectOutputStream(new FileOutputStream(contacts));
             oos.writeObject(contactsList);
