@@ -1,7 +1,11 @@
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-class Control {
+//Class renamed from Control to validation
+//Regex takes time to develop and scheme properly
+//Limited functionality will be present on final build. Program has to trust the 
+//user to not screw around
+class Validation {
     public static boolean validId(String id) {
         String regex = "[0-3]{1}[1-9]{1}[0-9]{2}+[-A][0-9]{3}[A-Z]{1}";
         Pattern valid = Pattern.compile(regex);
@@ -16,5 +20,3 @@ class Control {
     }
 }
 
-// Decided to switch regex and validation to a separate Control class. Just to keep things more clearer
-// May get changed and consolidated again

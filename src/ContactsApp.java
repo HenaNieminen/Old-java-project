@@ -1,11 +1,18 @@
 import java.io.*;
 import java.util.ArrayList;
 
-public class ContactsApp {
+public class ContactsApp implements Serializable {
+    //File systems and OOS is private static so they will be the same for each method
+    //It also wont work without them being so
+    public static ArrayList<Contact> contactsList = new ArrayList<Contact>();
+    public static File contacts = new File("contacts.txt");
+    public static ObjectOutputStream oos;
+
+
     public static void main(String [] args) {
         Console console = System.console();
         Boolean shutDown = false;
-        Info newContact = new Info(null, null, null, null, null, null);
+        Contact newContact = new Contact(null, null, null, null, null, null);
         //Start of the main method calls all essential methods from all other classes 
         
         System.out.println("Welcome!");
@@ -20,10 +27,10 @@ public class ContactsApp {
             String userChoice = System.console().readLine();
             switch (userChoice) {
                 case "1":
-                    Info.readContact();
+                    readContact();
                     break;
                 case "2":
-                    newContact.addContact();
+                    addContact(newContact);
                     break;
                 case "3":
                     break;
@@ -36,6 +43,38 @@ public class ContactsApp {
                     System.out.println("Invalid input");
                     break;
             }
+        }
+    }
+    public static void readContact() {
+        System.out.println(contactsList);
+        System.out.println("Enter anything to continue");
+        String readChoice = System.console().readLine();
+        switch (readChoice) {
+            default :
+                return;
+        }
+    }
+    public static void addContact(Contact a) {
+        System.out.println("Give the ID of the contact");
+        a.id = System.console().readLine();
+        System.out.println("Give the first name");
+        a.firstName = System.console().readLine();
+        System.out.println("Give the last name");
+        a.lastName = System.console().readLine();
+        System.out.println("Give the phone number");
+        a.phoneNumber = System.console().readLine();
+        System.out.println("(Opt.)Give the address");
+        a.address = System.console().readLine();
+        System.out.println("(Opt.) Give the email");
+        a.email = System.console().readLine();
+        System.out.println("Contact added!");
+        contactsList.add(new Contact(a.id,a.firstName,a.lastName,a.phoneNumber,a.address,a.email));
+        try{
+            oos = new ObjectOutputStream(new FileOutputStream(contacts));
+            oos.writeObject(contactsList);
+            oos.close();
+        }catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
@@ -54,4 +93,11 @@ public class ContactsApp {
 //contact slot. (And unreadable at that)
 //I need to make a method that scans the file for objects and creates the contact in a way that
 //increments numbers into the creation
+//
+
+//5.12.2023
+//After so much fighting with the code, and very shoddy construction, I decided to start the build again
+//from the starting draft. I renamed all files, classes, etc. more clearly to help make it more readable
+//and moved all tenous functionality to the contactsApp class in order to make it easier to compile and
+//execute the code.
 //
