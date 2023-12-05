@@ -66,28 +66,71 @@ public class ContactsApp implements Serializable {
     }
 
     public static void readContact() {
+        //readContact method will read all the contacts within the file. 
+        //However, not directly from the file and rather from the arraylist that works as an intermediary
         lister = contactsList.listIterator();
         boolean exit = false;
         int capacity = contactsList.size();
         while (!exit) {
             System.out.println("1. View all");
             System.out.println("2. Search");
-            System.out.println("3. Exit");
+            System.out.println("3. Back");
             String readChoice = System.console().readLine();
             switch (readChoice) {
+                //View all will take the amount of objects stored and executes a for loop to use the 
+                //listIterator to print out the saved contacts.
+                //If the file is missing or empty, the program will also tell you that.
                 case "1":
-
+                    System.out.println("-------------------");
+                    while(lister.hasNext()) {
+                        System.out.println(lister.next());
+                    }
+                    if(capacity == 0) {
+                        System.out.println("Your list is empty, or the file is missing");
+                    }
+                    //This will return the listIterator to the first index so it doesnt bug out
+                    //Once the user asks for the contacts again
+                    System.out.println("--------------------");
+                    lister = contactsList.listIterator(0);
+                    System.out.println("Press enter to continue");
+                    String userConf = System.console().readLine();
+                    //This console prompt is just there to allow the user to go through with their own pace
+                    //It will not print out the menu until the user presses enter
                     break;
                 case "2":
-                    System.out.println("Not yet implemented.");
+                    boolean found = false;
+                    System.out.println("Enter the first name of the contact");
+                    String firstName = System.console().readLine();
+                    System.out.println("--------------------");
+                    while(lister.hasNext()) {
+                        Contact s = (Contact)lister.next();
+                        if (s.firstName == firstName) {
+                            System.out.println(s);
+                            found = true;
+                        }
+                    }
+                    if(!found) {
+                        System.out.println("Contact not found.");
+                    }
+                    if(capacity == 0) {
+                        System.out.println("Your list is empty, or the file is missing");
+                    }
+                    System.out.println("--------------------");
+                    lister = contactsList.listIterator(0);
+                    System.out.println("Press enter to continue");
+                    String userConf2 = System.console().readLine();
+                    break;
+                case "3":
+                    exit = true;
                     break;
                 default :
                     return;
             }
         }
-        
     }
     public static void addContact() {
+        //Add contacts method will add up all the required values, which then OOS will
+        //write to the file
         System.out.println("Give the ID of the contact");
         String id = System.console().readLine();
         System.out.println("Give the first name");
@@ -133,4 +176,7 @@ public class ContactsApp implements Serializable {
 //from the starting draft. I renamed all files, classes, etc. more clearly to help make it more readable
 //and moved all tenous functionality to the contactsApp class in order to make it easier to compile and
 //execute the code.
+//
+//
+//
 //
