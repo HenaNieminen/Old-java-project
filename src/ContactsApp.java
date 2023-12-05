@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 //I've supressed the warnings for the time being. It complains about the checkfile method
 //and unchecked casts.
@@ -13,6 +14,7 @@ public class ContactsApp implements Serializable {
     public static File contacts = new File("contacts.txt");
     public static ObjectOutputStream oos;
     public static ObjectInputStream ois;
+    public static ListIterator lister;
 
 
     public static void main(String [] args) throws Exception {
@@ -21,7 +23,7 @@ public class ContactsApp implements Serializable {
         checkFile();
 
         System.out.println("Welcome!");
-        System.out.println("Please input your desired choice with a number");
+        System.out.println("Please input your desired choice and press enter");
         while(!shutDown) {
             System.out.println("1. View contacts");
             System.out.println("2. Add contacts");
@@ -37,14 +39,16 @@ public class ContactsApp implements Serializable {
                     addContact();
                     break;
                 case "3":
+                    System.out.println("Not yet implemented.");
                     break;
                 case "4":
+                    System.out.println("Not yet implemented.");
                     break;
                 case "5":
                     shutDown = true;
                     break;
                 default:
-                    System.out.println("Invalid input");
+                    System.out.println("Invalid input. Please try again");
                     break;
             }
         }
@@ -62,12 +66,24 @@ public class ContactsApp implements Serializable {
     }
 
     public static void readContact() {
-        System.out.println(contactsList);
-        System.out.println("Press enter to continue");
-        String readChoice = System.console().readLine();
-        switch (readChoice) {
-            default :
-                return;
+        lister = contactsList.listIterator();
+        boolean exit = false;
+        int capacity = contactsList.size();
+        while (!exit) {
+            System.out.println("1. View all");
+            System.out.println("2. Search");
+            System.out.println("3. Exit");
+            String readChoice = System.console().readLine();
+            switch (readChoice) {
+                case "1":
+                    
+                    break;
+                case "2":
+                    System.out.println("Not yet implemented.");
+                    break;
+                default :
+                    return;
+            }
         }
         //This switch is dumb :D. At least it works the way it is supposed to by not instantly printing the
         //main menu
