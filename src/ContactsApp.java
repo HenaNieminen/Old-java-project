@@ -10,11 +10,12 @@ import java.util.ListIterator;
 public class ContactsApp implements Serializable {
     //File systems and OOS is private static so they will be the same for each method
     //It also wont work without them being so
-    public static ArrayList<Contact> contactsList = new ArrayList<Contact>();
-    public static File contacts = new File("contacts.txt");
+    public static ArrayList<Contact> contactsList = new ArrayList<Contact>();//<--- This is where the unchecked casts warning is coming from
+    public static File contacts = new File("contacts.txt");                  //All of this 'just works' -Todd Howard, 2016
     public static ObjectOutputStream oos;
     public static ObjectInputStream ois;
     public static ListIterator lister;
+    
 
 
     public static void main(String [] args) throws Exception {
@@ -112,7 +113,7 @@ public class ContactsApp implements Serializable {
                     if(capacity == 0) {
                         System.out.println("Your list is empty, or the file is missing");
                     }
-                    //This will return the listIterator to the first index so it doesnt bug out
+                    //This will return the listIterator to the first index so it doesnt bug out of range
                     //Once the user asks for the contacts again
                     System.out.println("--------------------");
                     lister = contactsList.listIterator(0);
@@ -122,26 +123,29 @@ public class ContactsApp implements Serializable {
                     //It will not print out the menu until the user presses enter
                     break;
                 case "2":
+                    //Search does not work yet for some reason. That has to be solved
+                    //in order to get deleting and editing working
                     boolean found = false;
                     System.out.println("Enter the first name of the contact");
-                    String firstName = System.console().readLine();
+                    String id = System.console().readLine();
                     System.out.println("--------------------");
+                    lister = contactsList.listIterator();
                     while(lister.hasNext()) {
-                        Contact s = (Contact)lister.next();
-                        if (s.firstName == firstName) {
-                            System.out.println(s);
+                        Contact searchInput = (Contact)lister.next();
+                        if (searchInput.id == id) {
+                            System.out.println(searchInput);
                             found = true;
                         }
                     }
                     if(!found) {
-                        System.out.println("Contact not found.");
+                        System.out.println("Searching does not work yet.");
                     }
                     if(capacity == 0) {
                         System.out.println("Your list is empty, or the file is missing");
                     }
                     System.out.println("--------------------");
-                    lister = contactsList.listIterator(0);
                     System.out.println("Press enter to continue");
+                    lister = contactsList.listIterator(0);
                     String userConf2 = System.console().readLine();
                     break;
                 case "3":
@@ -152,6 +156,10 @@ public class ContactsApp implements Serializable {
                     break;
             }
         }
+    }
+    public void deleteContact() {
+    }
+    public void editContact() {
     }
 }
 //20.11.2023
@@ -179,4 +187,8 @@ public class ContactsApp implements Serializable {
 //
 //
 //
+//6.12.2023
+//Great success! I finally have a good gameplan for the whole project and made major strides. The only points
+//of concern and refining now is further control over the contacts and getting user validation done.
+//I highly doubt I can make it for every single input, but at least the ID and both first and lastnames
 //
