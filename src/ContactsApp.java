@@ -64,7 +64,31 @@ public class ContactsApp implements Serializable {
             }
         }
     }
-
+    public static void addContact() {
+        //Add contacts method will add up all the required values, which then OOS will
+        //write to the file
+        System.out.println("Give the ID of the contact");
+        String id = System.console().readLine();
+        System.out.println("Give the first name");
+        String firstName = System.console().readLine();
+        System.out.println("Give the last name");
+        String lastName = System.console().readLine();
+        System.out.println("Give the phone number");
+        String phoneNumber = System.console().readLine();
+        System.out.println("(Opt.)Give the address");
+        String address = System.console().readLine();
+        System.out.println("(Opt.) Give the email");
+        String email = System.console().readLine();
+        System.out.println("Contact added!");
+        contactsList.add(new Contact(id, firstName, lastName, phoneNumber, address, email));
+        try{
+            oos = new ObjectOutputStream(new FileOutputStream(contacts));
+            oos.writeObject(contactsList);
+            oos.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void readContact() {
         //readContact method will read all the contacts within the file. 
         //However, not directly from the file and rather from the arraylist that works as an intermediary
@@ -127,31 +151,6 @@ public class ContactsApp implements Serializable {
                     System.out.println("Invalid input");
                     break;
             }
-        }
-    }
-    public static void addContact() {
-        //Add contacts method will add up all the required values, which then OOS will
-        //write to the file
-        System.out.println("Give the ID of the contact");
-        String id = System.console().readLine();
-        System.out.println("Give the first name");
-        String firstName = System.console().readLine();
-        System.out.println("Give the last name");
-        String lastName = System.console().readLine();
-        System.out.println("Give the phone number");
-        String phoneNumber = System.console().readLine();
-        System.out.println("(Opt.)Give the address");
-        String address = System.console().readLine();
-        System.out.println("(Opt.) Give the email");
-        String email = System.console().readLine();
-        System.out.println("Contact added!");
-        contactsList.add(new Contact(id, firstName, lastName, phoneNumber, address, email));
-        try{
-            oos = new ObjectOutputStream(new FileOutputStream(contacts));
-            oos.writeObject(contactsList);
-            oos.close();
-        }catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
