@@ -22,14 +22,14 @@ class Contact implements Serializable { //Class renamed to reflect it more clear
         this.email = email;
     }
     //Getter methods
-    //May or may not be used. Will stay here just in case
+    //Will be used for the search and edit functions
     public String getId() {
         return id;
     }
-    public String getFirstname() {
+    public String getFirstName() {
         return firstName;
     }
-    public String getLastname() {
+    public String getLastName() {
         return lastName;
     }
     public String getPhoneNumber() {

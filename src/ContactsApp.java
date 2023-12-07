@@ -123,16 +123,17 @@ public class ContactsApp implements Serializable {
                     //It will not print out the menu until the user presses enter
                     break;
                 case "2":
-                    //Search does not work yet for some reason. That has to be solved
-                    //in order to get deleting and editing working
                     boolean found = false;
                     System.out.println("Enter the first name of the contact");
-                    String id = System.console().readLine();
+                    String searchName = System.console().readLine();
                     System.out.println("--------------------");
                     lister = contactsList.listIterator();
+                    //The problem with the code has been solved and getter methods finally see action
                     while(lister.hasNext()) {
+                    //It will use the getter method on the 'quasi' object that goes throgh the list
+                    //and compares it with the user given input.
                         Contact searchInput = (Contact)lister.next();
-                        if (searchInput.id == id) {
+                        if (searchInput.getFirstName().equals(searchName)) {
                             System.out.println(searchInput);
                             found = true;
                         }
