@@ -89,6 +89,9 @@ public class ContactsApp implements Serializable {
         }catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("-----------------");
+        System.out.println("Press enter to continue");
+        String userConf = System.console().readLine();
     }
     public static void readContact() {
         //readContact method will read all the contacts within the file. 
@@ -139,7 +142,7 @@ public class ContactsApp implements Serializable {
                         }
                     }
                     if(!found) {
-                        System.out.println("Searching does not work yet.");
+                        System.out.println("Contact not found.");
                     }
                     if(capacity == 0) {
                         System.out.println("Your list is empty, or the file is missing");
@@ -158,9 +161,9 @@ public class ContactsApp implements Serializable {
             }
         }
     }
-    public void deleteContact() {
+    public static void deleteContact() {
     }
-    public void editContact() {
+    public static void editContact() {
     }
 }
 //20.11.2023
