@@ -15,7 +15,9 @@ public class ContactsApp implements Serializable {
     public static ObjectOutputStream oos;
     public static ObjectInputStream ois;
     public static ListIterator lister;
-    
+    public static boolean found;
+    public static String searchName;
+    //There are plenty of variables defined globally, since they are used between methods.
 
 
     public static void main(String [] args) throws Exception {
@@ -25,7 +27,7 @@ public class ContactsApp implements Serializable {
 
         System.out.println("Welcome!");
         System.out.println("Please input your desired choice and press enter");
-        while(!shutDown) {
+        while (!shutDown) {
             System.out.println("1. View contacts");
             System.out.println("2. Add contacts");
             System.out.println("3. Edit contacts");
@@ -43,7 +45,7 @@ public class ContactsApp implements Serializable {
                     System.out.println("Not yet implemented.");
                     break;
                 case "4":
-                    System.out.println("Not yet implemented.");
+                    deleteContact();
                     break;
                 case "5":
                     shutDown = true;
@@ -55,7 +57,7 @@ public class ContactsApp implements Serializable {
         }
     }
     public static void checkFile() throws Exception {
-        if(contacts.isFile()) {
+        if (contacts.isFile()) {
             try {
                 ois = new ObjectInputStream(new FileInputStream(contacts));
                 contactsList = (ArrayList<Contact>)ois.readObject();
@@ -105,51 +107,16 @@ public class ContactsApp implements Serializable {
             System.out.println("3. Back");
             String readChoice = System.console().readLine();
             switch (readChoice) {
-                //View all will take the amount of objects stored and executes a for loop to use the 
-                //listIterator to print out the saved contacts.
-                //If the file is missing or empty, the program will also tell you that.
+                //In order to use the functionalities in the edit and delete method, I made them into separate methods
+                //so they could be reused effectively.
                 case "1":
-                    System.out.println("-------------------");
-                    while(lister.hasNext()) {
-                        System.out.println(lister.next());
-                    }
-                    if(capacity == 0) {
-                        System.out.println("Your list is empty, or the file is missing");
-                    }
-                    //This will return the listIterator to the first index so it doesnt bug out of range
-                    //Once the user asks for the contacts again
-                    System.out.println("--------------------");
-                    lister = contactsList.listIterator(0);
+                    viewAll();
                     System.out.println("Press enter to continue");
                     String userConf = System.console().readLine();
-                    //This console prompt is just there to allow the user to go through with their own pace
-                    //It will not print out the menu until the user presses enter
                     break;
                 case "2":
-                    boolean found = false;
-                    System.out.println("Enter the first name of the contact");
-                    String searchName = System.console().readLine();
-                    System.out.println("--------------------");
-                    lister = contactsList.listIterator();
-                    //The problem with the code has been solved and getter methods finally see action
-                    while(lister.hasNext()) {
-                    //It will use the getter method on the 'quasi' object that goes throgh the list
-                    //and compares it with the user given input.
-                        Contact searchInput = (Contact)lister.next();
-                        if (searchInput.getFirstName().equals(searchName)) {
-                            System.out.println(searchInput);
-                            found = true;
-                        }
-                    }
-                    if(!found) {
-                        System.out.println("Contact not found.");
-                    }
-                    if(capacity == 0) {
-                        System.out.println("Your list is empty, or the file is missing");
-                    }
-                    System.out.println("--------------------");
+                    select();
                     System.out.println("Press enter to continue");
-                    lister = contactsList.listIterator(0);
                     String userConf2 = System.console().readLine();
                     break;
                 case "3":
@@ -161,7 +128,88 @@ public class ContactsApp implements Serializable {
             }
         }
     }
+    public static void viewAll() {
+        int capacity = contactsList.size();
+        System.out.println("-------------------");
+        while (lister.hasNext()) {
+            System.out.println(lister.next());
+        }
+        if (capacity == 0) {
+            System.out.println("Your list is empty, or the file is missing");
+        }
+        //This will return the listIterator to the first index so it doesnt bug out of range
+        //Once the user asks for the contacts again
+        System.out.println("--------------------");
+        lister = contactsList.listIterator(0);
+        //This console prompt is just there to allow the user to go through with their own pace
+        //It will not print out the menu until the user presses enter
+    }
+    public static void select() {
+        //Why select instead of search as the name? Well, this method will also be used within the method for editing and deleting contacts
+        int capacity = contactsList.size();
+        found = false;
+        System.out.println("Enter the first name of the contact");
+        searchName = System.console().readLine();
+        System.out.println("--------------------");
+        lister = contactsList.listIterator();
+        //The problem with the code has been solved and getter methods finally see action
+        while (lister.hasNext()) {
+            //It will use the getter method on the 'quasi' object that goes throgh the list
+            //and compares it with the user given input.
+            Contact searchInput = (Contact)lister.next();
+            if (searchInput.getFirstName().equals(searchName)) {
+                System.out.println(searchInput);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("Contact not found.");
+        }
+        if (capacity == 0) {
+            System.out.println("Your list is empty, or the file is missing");
+        }
+        System.out.println("--------------------");
+        lister = contactsList.listIterator(0);
+    }
     public static void deleteContact() {
+        boolean confirmation = false;
+        select();
+        while (!confirmation) {
+            if (found) {
+                System.out.println("Are you sure you want to delete this contact? y/n?");
+                String userChoice = System.console().readLine();
+                switch (userChoice) {
+                    case "y":
+                        //This lambda utilizes the arrayLists removeIf method. Using the 
+                        //listiterator remove method caused an illegalStateException
+                        contactsList.removeIf(contact -> contact.getFirstName().equals(searchName));
+                        try{
+                            oos = new ObjectOutputStream(new FileOutputStream(contacts));
+                            oos.writeObject(contactsList);
+                            oos.close();
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("Contact deleted");
+                        System.out.println("---------------");
+                        System.out.println("Press enter to continue");
+                        String userConf2 = System.console().readLine();
+                        confirmation = true;
+                        break;
+                    case "n":
+                        confirmation = true;
+                        System.out.println("Deletion aborted");
+                        break;
+                    default:
+                        System.out.println("Invalid input");
+                        break;
+                }
+            } else {
+                System.out.println("The contact you entered did not exist. Press enter to continue");
+                String userConf = System.console().readLine();
+                confirmation = true;
+            }
+        }
     }
     public static void editContact() {
     }
