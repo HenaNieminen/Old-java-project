@@ -42,7 +42,7 @@ public class ContactsApp implements Serializable {
                     addContact();
                     break;
                 case "3":
-                    System.out.println("Not yet implemented.");
+                    editContact();
                     break;
                 case "4":
                     deleteContact();
@@ -172,9 +172,9 @@ public class ContactsApp implements Serializable {
         lister = contactsList.listIterator(0);
     }
     public static void deleteContact() {
-        boolean confirmation = false;
+        boolean exit = false;
         select();
-        while (!confirmation) {
+        while (!exit) {
             if (found) {
                 System.out.println("Are you sure you want to delete this contact? y/n?");
                 String userChoice = System.console().readLine();
@@ -194,11 +194,14 @@ public class ContactsApp implements Serializable {
                         System.out.println("---------------");
                         System.out.println("Press enter to continue");
                         String userConf2 = System.console().readLine();
-                        confirmation = true;
+                        exit = true;
                         break;
                     case "n":
-                        confirmation = true;
+                        exit = true;
                         System.out.println("Deletion aborted");
+                        System.out.println("---------------");
+                        System.out.println("Press enter to continue");
+                        String userConf3 = System.console().readLine();
                         break;
                     default:
                         System.out.println("Invalid input");
@@ -207,11 +210,32 @@ public class ContactsApp implements Serializable {
             } else {
                 System.out.println("The contact you entered did not exist. Press enter to continue");
                 String userConf = System.console().readLine();
-                confirmation = true;
+                exit = true;
             }
         }
     }
     public static void editContact() {
+        boolean exit = false;
+        select();
+        while (!exit) {
+            if (found) {
+                System.out.println("How do you want to edit this contact?");
+                System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number, 5. Address, 6. Email");
+                String userChoice = System.console().readLine();
+                switch (userChoice) {
+                    case "1":
+                        System.out.println("Enter the new ID");
+                        String newId = System.console().readLine();
+                        lister.set(new Contact(id, firstName, lastName, phoneNumber, address, email));
+                    default :
+                        System.out.println("Invalid input");
+                }
+            } else {
+                System.out.println("The contact you entered did not exist. Press enter to continue");
+                String userConf = System.console().readLine();
+                exit = true;
+            }
+        }
     }
 }
 //20.11.2023
