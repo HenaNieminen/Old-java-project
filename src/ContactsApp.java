@@ -17,6 +17,7 @@ public class ContactsApp implements Serializable {
     public static ListIterator lister;
     public static boolean found;
     public static String searchName;
+    public static Contact searchInput;
     public static int editIndex;
     //There are plenty of variables defined globally, since they are used between methods.
 
@@ -159,14 +160,14 @@ public class ContactsApp implements Serializable {
         while (lister.hasNext()) {
             //It will use the getter method on the 'quasi' object that goes throgh the list
             //and compares it with the user given input.
-            Contact searchInput = (Contact)lister.next();
+            searchInput = (Contact)lister.next();
             if (searchInput.getFirstName().equals(searchName)) {
                 System.out.println(searchInput);
                 found = true;
                 //Edit index is used for the editing function to edit the user given contact
                 editIndex = indexTrack;
             }
-            indexTrack = 0;
+            indexTrack++;
         }
         if (!found) {
             System.out.println("Contact not found.");
@@ -225,15 +226,29 @@ public class ContactsApp implements Serializable {
         while (!exit) {
             if (found) {
                 System.out.println("How do you want to edit this contact?");
-                System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number, 5. Address, 6. Email");
+                System.out.println(
+                System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number, 5. Address, 6. Email, 7. Exit");
                 String userChoice = System.console().readLine();
                 switch (userChoice) {
                     case "1":
                         System.out.println("Enter the new ID");
                         String newId = System.console().readLine();
                         contactsList.get(editIndex).setId(newId);
+                        try{
+                            oos = new ObjectOutputStream(new FileOutputStream(contacts));
+                            oos.writeObject(contactsList);
+                            oos.close();
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("ID updated!");
+                        break;
+                    case "7":
+                        exit = true;
+                        break;
                     default :
                         System.out.println("Invalid input");
+                        break;
                 }
             } else {
                 System.out.println("The contact you entered did not exist. Press enter to continue");
