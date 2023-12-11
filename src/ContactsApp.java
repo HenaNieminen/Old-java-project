@@ -175,8 +175,9 @@ public class ContactsApp implements Serializable {
             if (searchInput.getFirstName().equals(searchName)) {
                 System.out.println(searchInput);
                 found = true;
-                //Edit index is used for the editing function to edit the user given contact
                 editIndex = indexTrack;
+                //Edit index is used for the edit and delete functions to delete or edit objects stored
+                //at the specific index
             }
             indexTrack++;
         }
@@ -197,9 +198,8 @@ public class ContactsApp implements Serializable {
                 String userChoice = System.console().readLine();
                 switch (userChoice) {
                     case "y":
-                        //This lambda utilizes the arrayLists removeIf method. Using the 
-                        //listiterator remove method caused an illegalStateException
-                        contactsList.removeIf(contact -> contact.getFirstName().equals(searchName));
+                        //Removed the lambda and made it more consistent with the editing function
+                        contactsList.remove(editIndex);
                         writeToFile();
                         System.out.println("Contact deleted");
                         System.out.println("---------------");
