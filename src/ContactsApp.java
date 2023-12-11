@@ -190,7 +190,10 @@ public class ContactsApp implements Serializable {
         System.out.println("--------------------");
     }
     public static void deleteContact() {
+        //Added the view all method so the user can see all available contacts for deletion
+        lister = contactsList.listIterator(0);
         boolean exit = false;
+        viewAll();
         select();
         while (!exit) {
             if (found) {
@@ -229,6 +232,8 @@ public class ContactsApp implements Serializable {
         //Zeroes the listIterator index in order to not get stuck into one contact
         lister = contactsList.listIterator(0);
         boolean exit = false;
+        //ditto
+        viewAll();
         select();
         while (!exit) {
             if (found) {
