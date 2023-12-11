@@ -1,15 +1,14 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.ListIterator;
-
+/**
+ * Class ContactsApp
+ */
 //I've supressed the warnings for the time being. It complains about the checkfile method
 //and unchecked casts.
-//I also have to figure out a better way to display saved contacts and optimize the method
-//to checking the file. My reliance on arraylist and ObjectStream may be a bit of a problem
 @SuppressWarnings("unchecked")
 public class ContactsApp implements Serializable {
     //File systems and OOS is private static so they will be the same for each method
-    //It also wont work without them being so
     public static ArrayList<Contact> contactsList = new ArrayList<Contact>();//<--- This is where the unchecked casts warning is coming from
     public static File contacts = new File("contacts.txt");                  //All of this 'just works' -Todd Howard, 2016
     public static ObjectOutputStream oos;
@@ -65,17 +64,29 @@ public class ContactsApp implements Serializable {
                 contactsList = (ArrayList<Contact>)ois.readObject();
                 ois.close();
             }catch (IOException e) {
-                e.printStackTrace();
+                //I replaced the stacktrace with a dialogue that just says 'you done goofed'
+                System.out.println("Your file is corrupt. Your previously saved contacts are lost");
+                System.out.println("To generate a new file, add a new contact");
+                System.out.println("Press enter to continue");
+                String userConf = System.console().readLine();
             }
         }
     }
-    public static void writeToFile() throws IOException {
+    public static void writeToFile() {
         //Compressess the code to not have OOS everywhere separately
-        oos = new ObjectOutputStream(new FileOutputStream(contacts));
-        oos.writeObject(contactsList);
-        oos.close();
+        try{
+            oos = new ObjectOutputStream(new FileOutputStream(contacts));
+            oos.writeObject(contactsList);
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("An unexpected error has occurred");
+            //Might be necessary to still have a stack trace here
+            //I cleared out all the unnecessary throws when it can just be declared here and print
+            //the stack trace
+        }
     }
-    public static void addContact() throws IOException {
+    public static void addContact() {
         //Add contacts method will add up all the required values, which then OOS will
         //write to the file
         System.out.println("Give the ID of the contact");
@@ -177,7 +188,7 @@ public class ContactsApp implements Serializable {
         }
         System.out.println("--------------------");
     }
-    public static void deleteContact() throws IOException {
+    public static void deleteContact() {
         boolean exit = false;
         select();
         while (!exit) {
@@ -197,11 +208,11 @@ public class ContactsApp implements Serializable {
                         exit = true;
                         break;
                     case "n":
-                        exit = true;
                         System.out.println("Deletion aborted");
                         System.out.println("---------------");
                         System.out.println("Press enter to continue");
                         String userConf3 = System.console().readLine();
+                        exit = true;
                         break;
                     default:
                         System.out.println("Invalid input");
@@ -214,7 +225,7 @@ public class ContactsApp implements Serializable {
             }
         }
     }
-    public static void editContact() throws IOException {
+    public static void editContact() {
         //Zeroes the listIterator index in order to not get stuck into one contact
         lister = contactsList.listIterator(0);
         boolean exit = false;
@@ -232,6 +243,9 @@ public class ContactsApp implements Serializable {
                         contactsList.get(editIndex).setId(newId);
                         writeToFile();
                         System.out.println("ID updated!");
+                        System.out.println("---------------");
+                        System.out.println("Press enter to continue");
+                        String userConf = System.console().readLine();
                         break;
                     case "2":
                         System.out.println("Enter the new first name");
@@ -239,30 +253,50 @@ public class ContactsApp implements Serializable {
                         contactsList.get(editIndex).setFirstName(newFirstName);
                         writeToFile();
                         System.out.println("First name updated!");
+                        System.out.println("---------------");
+                        System.out.println("Press enter to continue");
+                        String userConf1 = System.console().readLine();
+                        break;
                     case "3":
                         System.out.println("Enter the new last name");
                         String newLastName = System.console().readLine();
                         contactsList.get(editIndex).setLastName(newLastName);
                         writeToFile();
                         System.out.println("Last name updated!");
+                        System.out.println("---------------");
+                        System.out.println("Press enter to continue");
+                        String userConf2 = System.console().readLine();
+                        break;
                     case "4":
                         System.out.println("Enter the new Phone number");
                         String newPhoneNumber = System.console().readLine();
                         contactsList.get(editIndex).setPhoneNumber(newPhoneNumber);
                         writeToFile();
                         System.out.println("Phone number updated!");
+                        System.out.println("---------------");
+                        System.out.println("Press enter to continue");
+                        String userConf3 = System.console().readLine();
+                        break;
                     case "5":
                         System.out.println("Enter the new Address");
                         String newAddress = System.console().readLine();
                         contactsList.get(editIndex).setAddress(newAddress);
                         writeToFile();
                         System.out.println("Address updated!");
+                        System.out.println("---------------");
+                        System.out.println("Press enter to continue");
+                        String userConf4 = System.console().readLine();
+                        break;
                     case "6":
                         System.out.println("Enter the new email");
                         String newEmail = System.console().readLine();
                         contactsList.get(editIndex).setEmail(newEmail);
                         writeToFile();
-                        System.out.println("Address updated!");
+                        System.out.println("Email updated!");
+                        System.out.println("---------------");
+                        System.out.println("Press enter to continue");
+                        String userConf5 = System.console().readLine();
+                        break;
                     case "7":
                         exit = true;
                         break;
