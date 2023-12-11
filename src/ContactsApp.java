@@ -70,6 +70,7 @@ public class ContactsApp implements Serializable {
         }
     }
     public static void writeToFile() throws IOException {
+        //Compressess the code to not have OOS everywhere separately
         oos = new ObjectOutputStream(new FileOutputStream(contacts));
         oos.writeObject(contactsList);
         oos.close();
@@ -214,12 +215,14 @@ public class ContactsApp implements Serializable {
         }
     }
     public static void editContact() throws IOException {
+        //Zeroes the listIterator index in order to not get stuck into one contact
+        lister = contactsList.listIterator(0);
         boolean exit = false;
         select();
         while (!exit) {
             if (found) {
                 System.out.println("How do you want to edit this contact?");
-                System.out.println(searchInput);
+                System.out.println(contactsList.get(editIndex));
                 System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number, 5. Address, 6. Email, 7. Exit");
                 String userChoice = System.console().readLine();
                 switch (userChoice) {
