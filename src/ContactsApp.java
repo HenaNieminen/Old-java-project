@@ -226,7 +226,7 @@ public class ContactsApp implements Serializable {
         while (!exit) {
             if (found) {
                 System.out.println("How do you want to edit this contact?");
-                System.out.println(
+                System.out.println(searchInput);
                 System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number, 5. Address, 6. Email, 7. Exit");
                 String userChoice = System.console().readLine();
                 switch (userChoice) {
