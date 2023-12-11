@@ -45,5 +45,24 @@ class Contact implements Serializable { //Class renamed to reflect it more clear
         //Will return the object values separated by commas
         return id + ", " + firstName + ", " + lastName + ", " + phoneNumber + ", " + address + ", " + email;
     }
+    //Setter methods for the editing functions
+    public void setId(String newId) {
+        this.id = newId;
+    }
+    public void setFirstName(String newFirstName) {
+        this.firstName = newFirstName;
+    }
+    public void setLastName(String newLastName) {
+        this.lastName = newLastName;
+    }
+    public void setPhoneNumber(String newPhoneNumber) {
+        this.phoneNumber = newPhoneNumber;
+    }
+    public void setAddress(String newAddress) {
+        this.address = newAddress;
+    }
+    public void setEmail(String newEmail) {
+        this.email = newEmail;
+    }
 }
 //This class will work as a constructor of the contact.

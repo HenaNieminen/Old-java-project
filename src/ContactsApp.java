@@ -17,6 +17,7 @@ public class ContactsApp implements Serializable {
     public static ListIterator lister;
     public static boolean found;
     public static String searchName;
+    public static int editIndex;
     //There are plenty of variables defined globally, since they are used between methods.
 
 
@@ -110,11 +111,15 @@ public class ContactsApp implements Serializable {
                 //In order to use the functionalities in the edit and delete method, I made them into separate methods
                 //so they could be reused effectively.
                 case "1":
+                    //This will return the listIterator to the first index so it doesnt bug out of range
+                    //I realized that if it was inside the method, it could possibly cause trouble for the editing and deleting functions
+                    lister = contactsList.listIterator(0);
                     viewAll();
                     System.out.println("Press enter to continue");
                     String userConf = System.console().readLine();
                     break;
                 case "2":
+                    lister = contactsList.listIterator(0);
                     select();
                     System.out.println("Press enter to continue");
                     String userConf2 = System.console().readLine();
@@ -125,6 +130,7 @@ public class ContactsApp implements Serializable {
                 default :
                     System.out.println("Invalid input");
                     break;
+                
             }
         }
     }
@@ -137,16 +143,13 @@ public class ContactsApp implements Serializable {
         if (capacity == 0) {
             System.out.println("Your list is empty, or the file is missing");
         }
-        //This will return the listIterator to the first index so it doesnt bug out of range
-        //Once the user asks for the contacts again
         System.out.println("--------------------");
-        lister = contactsList.listIterator(0);
-        //This console prompt is just there to allow the user to go through with their own pace
-        //It will not print out the menu until the user presses enter
     }
     public static void select() {
         //Why select instead of search as the name? Well, this method will also be used within the method for editing and deleting contacts
         int capacity = contactsList.size();
+        //Index track will be used to see at which part of the arraylist the select method is at
+        int indexTrack = 0;
         found = false;
         System.out.println("Enter the first name of the contact");
         searchName = System.console().readLine();
@@ -160,7 +163,10 @@ public class ContactsApp implements Serializable {
             if (searchInput.getFirstName().equals(searchName)) {
                 System.out.println(searchInput);
                 found = true;
+                //Edit index is used for the editing function to edit the user given contact
+                editIndex = indexTrack;
             }
+            indexTrack = 0;
         }
         if (!found) {
             System.out.println("Contact not found.");
@@ -169,7 +175,6 @@ public class ContactsApp implements Serializable {
             System.out.println("Your list is empty, or the file is missing");
         }
         System.out.println("--------------------");
-        lister = contactsList.listIterator(0);
     }
     public static void deleteContact() {
         boolean exit = false;
@@ -226,7 +231,7 @@ public class ContactsApp implements Serializable {
                     case "1":
                         System.out.println("Enter the new ID");
                         String newId = System.console().readLine();
-                        lister.set(new Contact(id, firstName, lastName, phoneNumber, address, email));
+                        contactsList.get(editIndex).setId(newId);
                     default :
                         System.out.println("Invalid input");
                 }
