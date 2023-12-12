@@ -5,15 +5,6 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 /**
  * Class ContactsApp
- * @param args Not used
- * @param contactsList An arraylist used to browse, save and read contacts
- * @param contacts A file class object that will create the file for the stored contacts
- * @param oos ObjectOutputStream used to write into the file
- * @param ois ObjectInputStream used to read the file when starting up the program
- * @param lister A listIterator object used to go through the arraylist and used for selecting and viewing contacts
- * @param found A boolean variable used for the select method. Used between other methods
- * @param searchName An input for the search function. Used between edit, search and delete methods
- * @param editIndex An integer used to keep track of the index in which the arraylist is residing. Used for editing and deleting
  * 
  * This class contains most of the code to bring all the functionalities of the contact app.
  */
@@ -34,10 +25,19 @@ public class ContactsApp implements Serializable {
 
 
     public static void main(String [] args) throws Exception {
+        /**
+         * The main method calls all respective methods for viewing, adding, editing and deleting contacts.
+         * It uses a while loop and a boolean value to control the main loop and uses a switch case for the
+         * user menu. The user will use the numerical keys to control the functions of the program, and they
+         * in turn in the code will call the methods.
+         */
         Console console = System.console();
         Boolean shutDown = false;
         checkFile();
-
+        /**
+         * The checkFile method is called within the main method to see if the file is intact and will load
+         * the contents into the arraylist for saved contacts
+         */
         System.out.println("Welcome!");
         System.out.println("Please input your desired choice and press enter");
         while (!shutDown) {
@@ -70,12 +70,20 @@ public class ContactsApp implements Serializable {
         }
     }
     public static void checkFile() throws Exception {
+        /**
+         * The checkFile will check if the file exists and will proceeed to load the file
+         * into the arraylist
+         */
         if (contacts.isFile()) {
             try {
                 ois = new ObjectInputStream(new FileInputStream(contacts));
                 contactsList = (ArrayList<Contact>)ois.readObject();
                 ois.close();
             }catch (IOException e) {
+                /**
+                 * It will catch any IOExceptions and will notify the user if their file is corrupt.
+                 * This will often happen if the file is tampered with.
+                 */
                 //I replaced the stacktrace with a dialogue that just says 'you done goofed'
                 System.out.println("Your file is corrupt. Your previously saved contacts are lost");
                 System.out.println("To generate a new file, add a new contact");
@@ -85,12 +93,20 @@ public class ContactsApp implements Serializable {
         }
     }
     public static void writeToFile() {
+        /**
+         * writeToFile method is used to compress the writing to the file by calling it within methods
+         * when it is needed. It will use the predefined ObjectOutPut stream declared in the class.
+         */
         //Compressess the code to not have OOS everywhere separately
         try{
             oos = new ObjectOutputStream(new FileOutputStream(contacts));
             oos.writeObject(contactsList);
             oos.close();
         } catch (IOException e) {
+            /**
+             * In the case of an IOException, the program will print the stack trace and also notify
+             * the user that an error has occured
+             */
             e.printStackTrace();
             System.out.println("An unexpected error has occurred");
             //Might be necessary to still have a stack trace here
@@ -100,10 +116,11 @@ public class ContactsApp implements Serializable {
     }
     public static void addContact() {
             String id = "";
+            String firstName = "";
             System.out.println("Give the ID of the contact");
             id = IdInput(id);
             System.out.println("Give the first name");
-            String firstName = System.console().readLine();
+            firstName = firstNameInput(firstName);
             System.out.println("Give the last name");
             String lastName = System.console().readLine();
             System.out.println("Give the phone number");
@@ -159,8 +176,17 @@ public class ContactsApp implements Serializable {
         }
     }
     public static void viewAll() {
+        /**
+         * The viewAll method will go through the arraylist where the contacts are saved and will
+         * print them all out for the user to see
+         */
         int capacity = contactsList.size();
         lister = contactsList.listIterator();
+        /**
+         * It uses a listIterator object predefined classwide for use in other methods as well.
+         * It also keeps track of the capacity of the list and will notify the user if the list
+         * is empty or missing.
+         */
         System.out.println("-------------------");
         while (lister.hasNext()) {
             System.out.println(lister.next());
@@ -347,7 +373,7 @@ public class ContactsApp implements Serializable {
     }
     public static String firstNameInput(String a) {
         Boolean validInput = false;
-        Pattern firstNamePattern = Pattern.compile(".");
+        Pattern firstNamePattern = Pattern.compile("[A-Z]{1}[a-z]{1,11}");
         while (!validInput) {
             a = System.console().readLine();
             Matcher firstNameMatch = firstNamePattern.matcher(a);
@@ -355,7 +381,22 @@ public class ContactsApp implements Serializable {
                 validInput = true;
                 return a;
             } else {
-                System.out.println("Invalid first name");
+                System.out.println("Invalid first name. Capitalize the first letter and keep the size between 2-12 letters");
+            }
+        }
+        return null;
+    }
+    public static String lastNameInput(String a) {
+        Boolean validInput = false;
+        Pattern lastNamePattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}");
+        while (!validInput) {
+            a = System.console().readLine();
+            Matcher lastNameMatch = lastNamePattern.matcher(a);
+            if (lastNameMatch.matches()) {
+                validInput = true;
+                return a;
+            } else {
+                System.out.println("Invalid last name. Capitalize the first letter and keep the size between 2-20 letters");
             }
         }
         return null;
