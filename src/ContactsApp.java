@@ -1,8 +1,21 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 /**
  * Class ContactsApp
+ * @param args Not used
+ * @param contactsList An arraylist used to browse, save and read contacts
+ * @param contacts A file class object that will create the file for the stored contacts
+ * @param oos ObjectOutputStream used to write into the file
+ * @param ois ObjectInputStream used to read the file when starting up the program
+ * @param lister A listIterator object used to go through the arraylist and used for selecting and viewing contacts
+ * @param found A boolean variable used for the select method. Used between other methods
+ * @param searchName An input for the search function. Used between edit, search and delete methods
+ * @param editIndex An integer used to keep track of the index in which the arraylist is residing. Used for editing and deleting
+ * 
+ * This class contains most of the code to bring all the functionalities of the contact app.
  */
 //I've supressed the warnings for the time being. It complains about the checkfile method
 //and unchecked casts.
@@ -16,7 +29,6 @@ public class ContactsApp implements Serializable {
     public static ListIterator lister;
     public static boolean found;
     public static String searchName;
-    public static Contact searchInput;
     public static int editIndex;
     //There are plenty of variables defined globally, since they are used between methods.
 
@@ -87,27 +99,27 @@ public class ContactsApp implements Serializable {
         }
     }
     public static void addContact() {
-        //Add contacts method will add up all the required values, which then OOS will
-        //write to the file
-        System.out.println("Give the ID of the contact");
-        String id = System.console().readLine();
-        System.out.println("Give the first name");
-        String firstName = System.console().readLine();
-        System.out.println("Give the last name");
-        String lastName = System.console().readLine();
-        System.out.println("Give the phone number");
-        String phoneNumber = System.console().readLine();
-        System.out.println("(Opt.)Give the address");
-        String address = System.console().readLine();
-        System.out.println("(Opt.) Give the email");
-        String email = System.console().readLine();
-        System.out.println("Contact added!");
-        contactsList.add(new Contact(id, firstName, lastName, phoneNumber, address, email));
-        writeToFile();
-        System.out.println("-----------------");
-        System.out.println("Press enter to continue");
-        String userConf = System.console().readLine();
+            String id = "";
+            System.out.println("Give the ID of the contact");
+            id = IdInput(id);
+            System.out.println("Give the first name");
+            String firstName = System.console().readLine();
+            System.out.println("Give the last name");
+            String lastName = System.console().readLine();
+            System.out.println("Give the phone number");
+            String phoneNumber = System.console().readLine();
+            System.out.println("(Opt.)Give the address");
+            String address = System.console().readLine();
+            System.out.println("(Opt.) Give the email");
+            String email = System.console().readLine();
+            System.out.println("Contact added!");
+            contactsList.add(new Contact(id, firstName, lastName, phoneNumber, address, email));
+            writeToFile();
+            System.out.println("-----------------");
+            System.out.println("Press enter to continue");
+            String userConf = System.console().readLine();
     }
+    
     public static void readContact() {
         //readContact method will read all the contacts within the file. 
         //However, not directly from the file and rather from the arraylist that works as an intermediary
@@ -148,6 +160,7 @@ public class ContactsApp implements Serializable {
     }
     public static void viewAll() {
         int capacity = contactsList.size();
+        lister = contactsList.listIterator();
         System.out.println("-------------------");
         while (lister.hasNext()) {
             System.out.println(lister.next());
@@ -160,18 +173,17 @@ public class ContactsApp implements Serializable {
     public static void select() {
         //Why select instead of search as the name? Well, this method will also be used within the method for editing and deleting contacts
         int capacity = contactsList.size();
+        lister = contactsList.listIterator();
         //Index track will be used to see at which part of the arraylist the select method is at
         int indexTrack = 0;
         found = false;
         System.out.println("Enter the first name of the contact");
         searchName = System.console().readLine();
         System.out.println("--------------------");
-        lister = contactsList.listIterator();
-        //The problem with the code has been solved and getter methods finally see action
         while (lister.hasNext()) {
             //It will use the getter method on the 'quasi' object that goes throgh the list
             //and compares it with the user given input.
-            searchInput = (Contact)lister.next();
+            Contact searchInput = (Contact)lister.next();
             if (searchInput.getFirstName().equals(searchName)) {
                 System.out.println(searchInput);
                 found = true;
@@ -199,7 +211,7 @@ public class ContactsApp implements Serializable {
             if (found) {
                 System.out.println("Are you sure you want to delete this contact? y/n?");
                 String userChoice = System.console().readLine();
-                switch (userChoice) {
+                switch (userChoice.toLowerCase()) {
                     case "y":
                         //Removed the lambda and made it more consistent with the editing function
                         contactsList.remove(editIndex);
@@ -239,12 +251,14 @@ public class ContactsApp implements Serializable {
             if (found) {
                 System.out.println("How do you want to edit this contact?");
                 System.out.println(contactsList.get(editIndex));
-                System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number, 5. Address, 6. Email, 7. Exit");
+                System.out.println("---------------");
+                System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number, 5. Address, 6. Email, 7. Back");
                 String userChoice = System.console().readLine();
                 switch (userChoice) {
                     case "1":
+                        String newId = "";
                         System.out.println("Enter the new ID");
-                        String newId = System.console().readLine();
+                        newId = IdInput(newId);
                         contactsList.get(editIndex).setId(newId);
                         writeToFile();
                         System.out.println("ID updated!");
@@ -315,6 +329,36 @@ public class ContactsApp implements Serializable {
                 exit = true;
             }
         }
+    }
+    public static String IdInput(String a) {
+        Boolean validInput = false;
+        Pattern idPattern = Pattern.compile("[0-3]{1}[1-9]{1}[0-9]{2}+[-A][0-9]{3}[A-Z]{1}");
+        while (!validInput) {
+            a = System.console().readLine();
+            Matcher idMatch = idPattern.matcher(a);
+            if (idMatch.matches()) {
+                validInput = true;
+                return a;
+            } else {
+                System.out.println("Invalid ID. Give a legitimate Finnish SSN");
+            }
+        }
+        return null;
+    }
+    public static String firstNameInput(String a) {
+        Boolean validInput = false;
+        Pattern firstNamePattern = Pattern.compile(".");
+        while (!validInput) {
+            a = System.console().readLine();
+            Matcher firstNameMatch = firstNamePattern.matcher(a);
+            if (firstNameMatch.matches()) {
+                validInput = true;
+                return a;
+            } else {
+                System.out.println("Invalid first name");
+            }
+        }
+        return null;
     }
 }
 //20.11.2023
