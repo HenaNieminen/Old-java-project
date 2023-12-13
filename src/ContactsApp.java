@@ -6,7 +6,22 @@ import java.util.regex.Matcher;
 /**
  * Class ContactsApp
  * @param args are unused.  
- * This class contains most of the code to bring all the functionalities of the contact app.
+ * There are many variables defined as public static since they are used between several methods.
+ * Some of these could still be optimized to keep it more lean and to not rely too much on making
+ * them public.
+ * 
+ * The public variables include:
+ * @param contactsList used as a backbone for the contact management
+ * @param contacts creates the file for saving contacts into. It will be in the source directory
+ * with the name "contacts.txt"
+ * @param oos is the objectOutputStream used to write into the file
+ * @param ois is the objetInputStream used to read from the file and loads it into the arraylist
+ * @param lister is a ListIterator object used to browse through the contactsList
+ * @param found is a boolean value used for searching, editing and deleting. This is related
+ * to the select() method and the editContact and deleteContact method also needs to know
+ * at which state it is in.
+ * @param editIndex is an integer value used to keep track of which index should the editing methods
+ * edit. It's found in the select method and exists solely to keep the editing and deleting informed
  */
 //I've supressed the warnings for the time being. It complains about the checkfile method
 //and unchecked casts.
@@ -19,12 +34,14 @@ public class ContactsApp implements Serializable {
     public static ObjectInputStream ois;
     public static ListIterator lister;
     public static boolean found;
-    public static String searchName;
     public static int editIndex;
     //There are plenty of variables defined globally, since they are used between methods.
 
     /**
      * Main method
+     * @throws Exception in accordance with the checkFile method to handle runtime exceptions
+     * @param console is the system console used to handle user inputs
+     * @param shutDown is used to exit the main loop of the program
      */
     public static void main(String [] args) throws Exception {
         /**
@@ -73,7 +90,7 @@ public class ContactsApp implements Serializable {
     }
     /**
      * checkFile method
-     * @throws Exception
+     * @throws Exception for runtime exceptions
      */
     public static void checkFile() throws Exception {
         /**
@@ -221,6 +238,7 @@ public class ContactsApp implements Serializable {
     public static void select() {
         //Why select instead of search as the name? Well, this method will also be used within the method for editing and deleting contacts
         int capacity = contactsList.size();
+        String searchName = "";
         lister = contactsList.listIterator();
         //Index track will be used to see at which part of the arraylist the select method is at
         int indexTrack = 0;
@@ -310,9 +328,8 @@ public class ContactsApp implements Serializable {
             System.out.println("No contacts to edit. Press enter to continue");
             String userConfExit = System.console().readLine();
             exit = true;
-        }
-        if (!exit) {
-        select();
+        } else {
+            select();
         }
         while (!exit) {
             if (found) {
