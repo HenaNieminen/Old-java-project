@@ -221,10 +221,20 @@ public class ContactsApp implements Serializable {
         //Index track will be used to see at which part of the arraylist the select method is at
         int indexTrack = 0;
         found = false;
-        System.out.println("Enter the first name of the contact");
-        searchName = System.console().readLine();
-        System.out.println("--------------------");
+        Boolean exit = false;
+        
+        while (!exit) {
+            if (capacity == 0) {
+                System.out.println("--------------------");
+                System.out.println("Your list is empty, or the file is missing");
+                exit = true;
+            } else {
+                System.out.println("Enter the first name of the contact");
+                searchName = System.console().readLine();
+            }
+        }
         while (lister.hasNext()) {
+            System.out.println("--------------------");
             //It will use the getter method on the 'quasi' object that goes throgh the list
             //and compares it with the user given input.
             Contact searchInput = (Contact)lister.next();
@@ -236,12 +246,9 @@ public class ContactsApp implements Serializable {
                 //at the specific index
             }
             indexTrack++;
-        }
-        if (!found) {
-            System.out.println("Contact not found.");
-        }
-        if (capacity == 0) {
-            System.out.println("Your list is empty, or the file is missing");
+            if (!found) {
+                System.out.println("Contact not found.");
+            }
         }
         System.out.println("--------------------");
     }
@@ -300,8 +307,10 @@ public class ContactsApp implements Serializable {
             String userConfExit = System.console().readLine();
             exit = true;
         }
+        if (!exit) {
+        select();
+        }
         while (!exit) {
-            select();
             if (found) {
                 System.out.println("How do you want to edit this contact?");
                 System.out.println(contactsList.get(editIndex));
