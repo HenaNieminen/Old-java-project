@@ -251,7 +251,7 @@ public class ContactsApp implements Serializable {
         boolean exit = false;
         viewAll();
         if (contactsList.size() == 0) {
-            System.out.println("No contacts to edit. Press enter to continue");
+            System.out.println("No contacts to delete. Press enter to continue");
             String userConfExit = System.console().readLine();
             exit = true;
         }
