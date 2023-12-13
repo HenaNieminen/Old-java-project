@@ -231,6 +231,7 @@ public class ContactsApp implements Serializable {
             } else {
                 System.out.println("Enter the first name of the contact");
                 searchName = System.console().readLine();
+                exit = true;
             }
         }
         while (lister.hasNext()) {
