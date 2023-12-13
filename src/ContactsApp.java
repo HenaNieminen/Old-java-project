@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
  * them public.
  * 
  * The public variables include:
- * @param contactsList used as a backbone for the contact management
+ * @param contactsList arraylist is used as a backbone for the contact management
  * @param contacts creates the file for saving contacts into. It will be in the source directory
  * with the name "contacts.txt"
  * @param oos is the objectOutputStream used to write into the file
@@ -42,6 +42,7 @@ public class ContactsApp implements Serializable {
      * @throws Exception in accordance with the checkFile method to handle runtime exceptions
      * @param console is the system console used to handle user inputs
      * @param shutDown is used to exit the main loop of the program
+     * @param userChoice is used to take the user input for the selection
      */
     public static void main(String [] args) throws Exception {
         /**
@@ -91,6 +92,8 @@ public class ContactsApp implements Serializable {
     /**
      * checkFile method
      * @throws Exception for runtime exceptions
+     * @param contacts is used here to check the file integrity and to load the contents
+     * to the arraylist
      */
     public static void checkFile() throws Exception {
         /**
@@ -117,6 +120,7 @@ public class ContactsApp implements Serializable {
     }
     /**
      * writeToFile method
+     * @param oos is used here to write to the file
      */
     public static void writeToFile() {
         /**
@@ -142,6 +146,13 @@ public class ContactsApp implements Serializable {
     }
     /**
      * method addContact
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param phoneNumber
+     * @param address
+     * @param email
+     * The method contains all variables for creating a Contact object
      */
     public static void addContact() {
         /**
@@ -175,13 +186,14 @@ public class ContactsApp implements Serializable {
     }
     /**
      * method readContact
+     * @param exit is used to control the loop for displaying the read menu.
+     * @param readChoice is used to control the switch for different options
      */
     public static void readContact() {
         //readContact method will read all the contacts within the file. 
         //However, not directly from the file and rather from the arraylist that works as an intermediary
         lister = contactsList.listIterator();
         boolean exit = false;
-        int capacity = contactsList.size();
         while (!exit) {
             System.out.println("1. View all");
             System.out.println("2. Search");
@@ -214,6 +226,16 @@ public class ContactsApp implements Serializable {
             }
         }
     }
+    /**
+     * Method viewAll
+     * 
+     * Used for viewing contacts loaded into the arraylist
+     * @param capacity is the size taken from the arraylist for contacts. Used to determine if
+     * the arraylist is empty or the file is missing completely
+     * @param lister is used here to go through the whole contact arraylist and print them out
+     * into the console. It is used togheter with the ListIterator classes hasNext method in a 
+     * while loop.
+     */
     public static void viewAll() {
         /**
          * The viewAll method will go through the arraylist where the contacts are saved and will
@@ -235,6 +257,18 @@ public class ContactsApp implements Serializable {
         }
         System.out.println("--------------------");
     }
+    /**
+     * Method select
+     * @param lister is used to go through the arraylist
+     * @param capacity is used to check the size of the contactslist as in the viewAll method
+     * @param searchName is used to search for the contact by its first name
+     * @param searchInput is a Contact object that goes through the arraylist with the help
+     * of listiterator and applies itself as the object the first name equals to in the list
+     * @param exit is used to control the while loop for the console input
+     * @param indexTrack is used to amount the index in which the target contact is and will
+     * apply itself to the publically defined editIndex
+     * 
+     */
     public static void select() {
         //Why select instead of search as the name? Well, this method will also be used within the method for editing and deleting contacts
         int capacity = contactsList.size();
@@ -274,6 +308,11 @@ public class ContactsApp implements Serializable {
         }
         System.out.println("--------------------");
     }
+    /**
+     * @param lister is reset here to the first index of the arraylist in order to not get it stuck
+     * to a specific index from search and viewing methods
+     * @param exit is used to control the while loop that asks the user which contact to delete
+     */
     public static void deleteContact() {
         //Added the view all method so the user can see all available contacts for deletion
         lister = contactsList.listIterator(0);

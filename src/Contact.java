@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * 
  * It implements the Serializable interface for use with the ObjectStreams and arraylists.
  */
-final class Contact implements Serializable { //Class renamed to reflect it more clearly
+public class Contact implements Serializable { //Class renamed to reflect it more clearly
                                         //Info class name didn't make much sense and was confusing
     public String id;
     public String firstName;
@@ -20,6 +20,7 @@ final class Contact implements Serializable { //Class renamed to reflect it more
     /**
      * Contact constructor
      * @param id used as variable for the Finnish SSN
+     * 
      * @param firstName contacts' first name
      * @param lastName contacts' last name
      * @param phoneNumber contacts' phone number
@@ -113,7 +114,7 @@ final class Contact implements Serializable { //Class renamed to reflect it more
     }
     /**
      * setPhoneNumber method
-     * @param newPhoneName is recieved from the editing method in ContactsApp class
+     * @param newPhoneNumber is recieved from the editing method in ContactsApp class
      */
     public void setPhoneNumber(String newPhoneNumber) {
         this.phoneNumber = newPhoneNumber;
