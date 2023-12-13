@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 public class ContactsApp implements Serializable {
     //File systems and OOS is private static so they will be the same for each method
     public static ArrayList<Contact> contactsList = new ArrayList<Contact>();//<--- This is where the unchecked casts warning is coming from
-    public static File contacts = new File("contacts.txt");                  //All of this 'just works' -Todd Howard, 2016
+    public static File contacts = new File("contacts.txt");                  //"All of this 'just works' " -Todd Howard, 2016
     public static ObjectOutputStream oos;
     public static ObjectInputStream ois;
     public static ListIterator lister;
@@ -133,18 +133,22 @@ public class ContactsApp implements Serializable {
          */
             String id = "";
             String firstName = "";
+            String lastName = "";
+            String phoneNumber = "";
+            String address = "";
+            String email = "";
             System.out.println("Give the ID of the contact");
             id = IdInput(id);
             System.out.println("Give the first name");
             firstName = firstNameInput(firstName);
             System.out.println("Give the last name");
-            String lastName = System.console().readLine();
+            lastName = lastNameInput(lastName);
             System.out.println("Give the phone number");
-            String phoneNumber = System.console().readLine();
+            phoneNumber = phoneNumberInput(phoneNumber);
             System.out.println("(Opt.)Give the address");
-            String address = System.console().readLine();
+            address = addressInput(address);
             System.out.println("(Opt.) Give the email");
-            String email = System.console().readLine();
+            email = emailInput(email);
             System.out.println("Contact added!");
             contactsList.add(new Contact(id, firstName, lastName, phoneNumber, address, email));
             writeToFile();
@@ -222,7 +226,6 @@ public class ContactsApp implements Serializable {
         int indexTrack = 0;
         found = false;
         Boolean exit = false;
-        
         while (!exit) {
             if (capacity == 0) {
                 System.out.println("--------------------");
@@ -231,11 +234,11 @@ public class ContactsApp implements Serializable {
             } else {
                 System.out.println("Enter the first name of the contact");
                 searchName = System.console().readLine();
+                System.out.println("--------------------");
                 exit = true;
             }
         }
         while (lister.hasNext()) {
-            System.out.println("--------------------");
             //It will use the getter method on the 'quasi' object that goes throgh the list
             //and compares it with the user given input.
             Contact searchInput = (Contact)lister.next();
@@ -247,9 +250,9 @@ public class ContactsApp implements Serializable {
                 //at the specific index
             }
             indexTrack++;
-            if (!found) {
-                System.out.println("Contact not found.");
-            }
+        }
+        if (!found) {
+            System.out.println("Contact not found.");
         }
         System.out.println("--------------------");
     }
@@ -316,8 +319,7 @@ public class ContactsApp implements Serializable {
                 System.out.println("How do you want to edit this contact?");
                 System.out.println(contactsList.get(editIndex));
                 System.out.println("---------------");
-                System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number,"
-                + "5. Address, 6. Email, 7. Exit");
+                System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number, 5. Address, 6. Email 7. Exit");
                 
                 String userChoice = System.console().readLine();
                 switch (userChoice) {
@@ -333,9 +335,10 @@ public class ContactsApp implements Serializable {
                         String userConf = System.console().readLine();
                         break;
                     case "2":
+                        String newFirst = "";
                         System.out.println("Enter the new first name");
-                        String newFirstName = System.console().readLine();
-                        contactsList.get(editIndex).setFirstName(newFirstName);
+                        newFirst = firstNameInput(newFirst);
+                        contactsList.get(editIndex).setFirstName(newFirst);
                         writeToFile();
                         System.out.println("First name updated!");
                         System.out.println("---------------");
@@ -343,9 +346,10 @@ public class ContactsApp implements Serializable {
                         String userConf1 = System.console().readLine();
                         break;
                     case "3":
+                        String newLast = "";
                         System.out.println("Enter the new last name");
-                        String newLastName = System.console().readLine();
-                        contactsList.get(editIndex).setLastName(newLastName);
+                        newLast = lastNameInput(newLast);
+                        contactsList.get(editIndex).setLastName(newLast);
                         writeToFile();
                         System.out.println("Last name updated!");
                         System.out.println("---------------");
@@ -353,9 +357,10 @@ public class ContactsApp implements Serializable {
                         String userConf2 = System.console().readLine();
                         break;
                     case "4":
+                        String newPhone = "";
                         System.out.println("Enter the new Phone number");
-                        String newPhoneNumber = System.console().readLine();
-                        contactsList.get(editIndex).setPhoneNumber(newPhoneNumber);
+                        newPhone = phoneNumberInput(newPhone);
+                        contactsList.get(editIndex).setPhoneNumber(newPhone);
                         writeToFile();
                         System.out.println("Phone number updated!");
                         System.out.println("---------------");
@@ -363,8 +368,9 @@ public class ContactsApp implements Serializable {
                         String userConf3 = System.console().readLine();
                         break;
                     case "5":
+                        String newAddress = "";
                         System.out.println("Enter the new Address");
-                        String newAddress = System.console().readLine();
+                        newAddress = addressInput(newAddress);
                         contactsList.get(editIndex).setAddress(newAddress);
                         writeToFile();
                         System.out.println("Address updated!");
@@ -373,8 +379,9 @@ public class ContactsApp implements Serializable {
                         String userConf4 = System.console().readLine();
                         break;
                     case "6":
+                        String newEmail = "";
                         System.out.println("Enter the new email");
-                        String newEmail = System.console().readLine();
+                        newEmail = emailInput(newEmail);
                         contactsList.get(editIndex).setEmail(newEmail);
                         writeToFile();
                         System.out.println("Email updated!");
@@ -396,50 +403,95 @@ public class ContactsApp implements Serializable {
             }
         }
     }
-    public static String IdInput(String a) {
+    public static String IdInput(String id) {
         Boolean validInput = false;
         Pattern idPattern = Pattern.compile("[0-3]{1}[1-9]{1}[0-9]{2}+[-A][0-9]{3}[A-Z]{1}");
         while (!validInput) {
-            a = System.console().readLine();
-            Matcher idMatch = idPattern.matcher(a);
+            id = System.console().readLine();
+            Matcher idMatch = idPattern.matcher(id);
             if (idMatch.matches()) {
                 validInput = true;
-                return a;
+                return id;
             } else {
                 System.out.println("Invalid ID. Give a legitimate Finnish SSN");
             }
         }
-        return a;
+        return id;
     }
-    public static String firstNameInput(String a) {
+    public static String firstNameInput(String first) {
         Boolean validInput = false;
         Pattern firstNamePattern = Pattern.compile("[A-Z]{1}[a-z]{1,11}");
         while (!validInput) {
-            a = System.console().readLine();
-            Matcher firstNameMatch = firstNamePattern.matcher(a);
+            first = System.console().readLine();
+            Matcher firstNameMatch = firstNamePattern.matcher(first);
             if (firstNameMatch.matches()) {
                 validInput = true;
-                return a;
+                return first;
             } else {
                 System.out.println("Invalid first name. Capitalize the first letter and keep the size between 2-12 letters");
             }
         }
-        return a;
+        return first;
     }
-    public static String lastNameInput(String a) {
+    public static String lastNameInput(String last) {
         Boolean validInput = false;
         Pattern lastNamePattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}");
         while (!validInput) {
-            a = System.console().readLine();
-            Matcher lastNameMatch = lastNamePattern.matcher(a);
+            last = System.console().readLine();
+            Matcher lastNameMatch = lastNamePattern.matcher(last);
             if (lastNameMatch.matches()) {
                 validInput = true;
-                return a;
+                return last;
             } else {
                 System.out.println("Invalid last name. Capitalize the first letter and keep the size between 2-20 letters");
             }
         }
-        return a;
+        return last;
+    }
+    public static String phoneNumberInput(String phone) {
+        Boolean validInput = false;
+        Pattern phonePattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}");
+        while (!validInput) {
+            phone = System.console().readLine();
+            Matcher phoneMatch = phonePattern.matcher(phone);
+            if (phoneMatch.matches()) {
+                validInput = true;
+                return phone;
+            } else {
+                System.out.println("Invalid phone number, use the +358 format and proper length");
+            }
+        }
+        return phone;
+    }
+    public static String addressInput(String address) {
+        Boolean validInput = false;
+        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}");
+        while (!validInput) {
+            address = System.console().readLine();
+            Matcher addressMatch = addressPattern.matcher(address);
+            if (addressMatch.matches()) {
+                validInput = true;
+                return address;
+            } else {
+                System.out.println("Invalid address");
+            }
+        }
+        return address;
+    }
+    public static String emailInput(String email) {
+        Boolean validInput = false;
+        Pattern emailPattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}");
+        while (!validInput) {
+            email = System.console().readLine();
+            Matcher emailMatch = emailPattern.matcher(email);
+            if (emailMatch.matches()) {
+                validInput = true;
+                return email;
+            } else {
+                System.out.println("Invalid e-mail.");
+            }
+        }
+        return email;
     }
 }
 //20.11.2023
