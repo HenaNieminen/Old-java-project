@@ -111,12 +111,24 @@ final class Contact implements Serializable { //Class renamed to reflect it more
     public void setLastName(String newLastName) {
         this.lastName = newLastName;
     }
+    /**
+     * setPhoneNumber method
+     * @param newPhoneName is recieved from the editing method in ContactsApp class
+     */
     public void setPhoneNumber(String newPhoneNumber) {
         this.phoneNumber = newPhoneNumber;
     }
+    /**
+     * setAddresss method
+     * @param newAddress is recieved from the editing method in ContactsApp class
+     */
     public void setAddress(String newAddress) {
         this.address = newAddress;
     }
+    /**
+     * setEmail method
+     * @param newEmail is recieved from the editing method in ContactsApp class
+     */
     public void setEmail(String newEmail) {
         this.email = newEmail;
     }
