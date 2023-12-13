@@ -85,7 +85,7 @@ public class ContactsApp implements Serializable {
                 ois = new ObjectInputStream(new FileInputStream(contacts));
                 contactsList = (ArrayList<Contact>)ois.readObject();
                 ois.close();
-            }catch (IOException e) {
+            } catch (IOException e) {
                 /**
                  * It will catch any IOExceptions and will notify the user if their file is corrupt.
                  * This will often happen if the file is tampered with.
@@ -107,7 +107,7 @@ public class ContactsApp implements Serializable {
          * when it is needed. It will use the predefined ObjectOutPut stream declared in the class.
          */
         //Compressess the code to not have OOS everywhere separately
-        try{
+        try {
             oos = new ObjectOutputStream(new FileOutputStream(contacts));
             oos.writeObject(contactsList);
             oos.close();
@@ -250,8 +250,13 @@ public class ContactsApp implements Serializable {
         lister = contactsList.listIterator(0);
         boolean exit = false;
         viewAll();
-        select();
+        if (contactsList.size() == 0) {
+            System.out.println("No contacts to edit. Press enter to continue");
+            String userConfExit = System.console().readLine();
+            exit = true;
+        }
         while (!exit) {
+            select();
             if (found) {
                 System.out.println("Are you sure you want to delete this contact? y/n?");
                 String userChoice = System.console().readLine();
@@ -290,13 +295,20 @@ public class ContactsApp implements Serializable {
         boolean exit = false;
         //ditto
         viewAll();
-        select();
+        if (contactsList.size() == 0) {
+            System.out.println("No contacts to edit. Press enter to continue");
+            String userConfExit = System.console().readLine();
+            exit = true;
+        }
         while (!exit) {
+            select();
             if (found) {
                 System.out.println("How do you want to edit this contact?");
                 System.out.println(contactsList.get(editIndex));
                 System.out.println("---------------");
-                System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number, 5. Address, 6. Email, 7. Back");
+                System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number,"
+                + "5. Address, 6. Email, 7. Exit");
+                
                 String userChoice = System.console().readLine();
                 switch (userChoice) {
                     case "1":
