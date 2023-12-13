@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 /**
  * Class ContactsApp
- * 
+ * @param args are unused.  
  * This class contains most of the code to bring all the functionalities of the contact app.
  */
 //I've supressed the warnings for the time being. It complains about the checkfile method
@@ -23,7 +23,9 @@ public class ContactsApp implements Serializable {
     public static int editIndex;
     //There are plenty of variables defined globally, since they are used between methods.
 
-
+    /**
+     * Main method
+     */
     public static void main(String [] args) throws Exception {
         /**
          * The main method calls all respective methods for viewing, adding, editing and deleting contacts.
@@ -69,6 +71,10 @@ public class ContactsApp implements Serializable {
             }
         }
     }
+    /**
+     * checkFile method
+     * @throws Exception
+     */
     public static void checkFile() throws Exception {
         /**
          * The checkFile will check if the file exists and will proceeed to load the file
@@ -92,6 +98,9 @@ public class ContactsApp implements Serializable {
             }
         }
     }
+    /**
+     * writeToFile method
+     */
     public static void writeToFile() {
         /**
          * writeToFile method is used to compress the writing to the file by calling it within methods
@@ -114,7 +123,14 @@ public class ContactsApp implements Serializable {
             //the stack trace
         }
     }
+    /**
+     * method addContact
+     */
     public static void addContact() {
+        /**
+         * This method will use the input methods for user validation and then create
+         * an object into the file using the writeToFile method.
+         */
             String id = "";
             String firstName = "";
             System.out.println("Give the ID of the contact");
@@ -136,7 +152,9 @@ public class ContactsApp implements Serializable {
             System.out.println("Press enter to continue");
             String userConf = System.console().readLine();
     }
-    
+    /**
+     * method readContact
+     */
     public static void readContact() {
         //readContact method will read all the contacts within the file. 
         //However, not directly from the file and rather from the arraylist that works as an intermediary
