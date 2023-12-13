@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 /**
  * Class ContactsApp
- * @param args are unused.  
  * There are many variables defined as public static since they are used between several methods.
  * Some of these could still be optimized to keep it more lean and to not rely too much on making
  * them public.
@@ -39,6 +38,7 @@ public class ContactsApp implements Serializable {
 
     /**
      * Main method
+     * @param args are unused.  
      * @throws Exception in accordance with the checkFile method to handle runtime exceptions
      * @param console is the system console used to handle user inputs
      * @param shutDown is used to exit the main loop of the program
