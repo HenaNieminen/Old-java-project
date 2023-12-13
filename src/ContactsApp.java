@@ -387,7 +387,7 @@ public class ContactsApp implements Serializable {
                 System.out.println("Invalid ID. Give a legitimate Finnish SSN");
             }
         }
-        return null;
+        return a;
     }
     public static String firstNameInput(String a) {
         Boolean validInput = false;
@@ -402,7 +402,7 @@ public class ContactsApp implements Serializable {
                 System.out.println("Invalid first name. Capitalize the first letter and keep the size between 2-12 letters");
             }
         }
-        return null;
+        return a;
     }
     public static String lastNameInput(String a) {
         Boolean validInput = false;
@@ -417,7 +417,7 @@ public class ContactsApp implements Serializable {
                 System.out.println("Invalid last name. Capitalize the first letter and keep the size between 2-20 letters");
             }
         }
-        return null;
+        return a;
     }
 }
 //20.11.2023
