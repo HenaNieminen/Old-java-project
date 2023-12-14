@@ -3,7 +3,13 @@ import java.util.ArrayList;
 //Serializable interface also used here to utilize ObjectOutuputStream and to not cause IOExceptions
 /**
  * Contact class contains the object which will be saved to the file
+ * @author Henri Nieminen
  * It implements the Serializable interface for use with the ObjectStreams and arraylists.
+ * @param id works as the SSN of the object
+ * @param firstName works as the first name of the object
+ * @param lastName works as the last name of the object
+ * @param address works as the address of the object
+ * @param email works as the email address of the object
  */
 public final class Contact implements Serializable {  //Class renamed to reflect it more clearly
                                                 //Info class name didn't make much sense and was confusing
@@ -15,12 +21,12 @@ public final class Contact implements Serializable {  //Class renamed to reflect
     public String email;
     /**
      * Contact constructor uses the public values defined in the Contact class
-     * @param id used as variable for the Finnish SSN
-     * @param firstName contacts' first name
-     * @param lastName contacts' last name
-     * @param phoneNumber contacts' phone number
-     * @param address contacts' home address
-     * @param email contacts' email address
+     * @param id inserted as the objects ID
+     * @param firstName inserted as the objects first name
+     * @param lastName inserted as the objects last name
+     * @param phoneNumber inserted as the objects phone number
+     * @param address inserted as the objects address
+     * @param email inserted as the objects e-mail address
      * 
      */
     public Contact(String id, String firstName, String lastName, 

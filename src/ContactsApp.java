@@ -5,22 +5,18 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 /**
  * Class ContactsApp is the main class used for the functionalities of the app
- * 
+ * @author Henri Nieminen
  * The public variables include:
  * @param contactsList arraylist is used as a backbone for the contact management
- * @param contacts creates the file for saving contacts into. It will be in the source directory
- * with the name "contacts.txt"
+ * @param contacts creates the file for saving contacts into. It will be created in the source directory.
  * @param oos is the objectOutputStream used to write into the file
  * @param ois is the objetInputStream used to read from the file and loads it into the arraylist
  * @param lister is a ListIterator object used to browse through the contactsList
- * @param found is a boolean value used for searching, editing and deleting. This is related
- * to the select() method and the editContact and deleteContact method also needs to know
- * at which state it is in.
- * @param editIndex is an integer value used to keep track of which index should the editing methods
- * edit. It's found in the select method and exists solely to keep the editing and deleting informed
+ * @param found is a boolean value used for searching, editing and deleting. 
+ * @param editIndex is an integer value used to keep track of which index should the editing methods edit. 
+ * It's found in the select method and exists solely to keep the editing and deleting informed
  */
-//I've supressed the warnings for the time being. It complains about the checkfile method
-//and unchecked casts.
+//I've supressed the warnings for the single unchecked operation
 @SuppressWarnings("unchecked")
 public final class ContactsApp implements Serializable {
     //File systems and OOS is private static so they will be the same for each method
@@ -31,7 +27,6 @@ public final class ContactsApp implements Serializable {
     public static ListIterator lister;
     public static boolean found;
     public static int editIndex;
-    //There are plenty of variables defined globally, since they are used between methods.
 
     /**
      * main method is used for calling methods to activate different functions
@@ -117,7 +112,7 @@ public final class ContactsApp implements Serializable {
     }
     /**
      * writeToFile method is used in editing and adding a contact
-     * @param oos is used here to write to the file
+     * @param oos is used to write to the file
      */
     public static void writeToFile() {
         /**
@@ -473,6 +468,7 @@ public final class ContactsApp implements Serializable {
      * idInput is the method for inputting and checking an SSN number for the contact
      * @param idPattern is the regex pattern for the ID
      * @param idMatch is the regex matcher for the ID
+     * @param id is the recieved parameter of the ID
      * @return the method returns the set ID back
      */
     public static String idInput(String id) {
@@ -494,11 +490,12 @@ public final class ContactsApp implements Serializable {
      * firstNameInput is the method for inputtting and checking the first name for the contact
      * @param firstNamePattern is the regex pattern for the first name
      * @param firstNameMatch is the regex matcher for the first name
+     * @param first is the recieved parameter of the first name
      * @return the method returns the inputted name back
      */
     public static String firstNameInput(String first) {
         Boolean validInput = false;
-        Pattern firstNamePattern = Pattern.compile("[A-Z]{1}[a-zA-Z ]{1,11}");
+        Pattern firstNamePattern = Pattern.compile("[A-Z]{1}[a-zA-Z\\- ]{1,11}");
         while (!validInput) {
             first = System.console().readLine();
             Matcher firstNameMatch = firstNamePattern.matcher(first);
@@ -515,11 +512,12 @@ public final class ContactsApp implements Serializable {
      * lastNameInput is the method for inputting and checking the last name for the contact.
      * @param lastNamePattern is the regex pattern for the last name
      * @param lastNameMatch is the regex matcher for the last name
+     * @param last is the reciecved paramter of the last name
      * @return the method returns the inputted surname back
      */
     public static String lastNameInput(String last) {
         Boolean validInput = false;
-        Pattern lastNamePattern = Pattern.compile("[A-Z]{1}[a-zA-Z ]{1,20}");
+        Pattern lastNamePattern = Pattern.compile("[A-Z]{1}[a-zA-Z\\- ]{1,20}");
         while (!validInput) {
             last = System.console().readLine();
             Matcher lastNameMatch = lastNamePattern.matcher(last);
@@ -536,6 +534,7 @@ public final class ContactsApp implements Serializable {
      * phoneNumberInput is the method for inputting and checking the phone number for the contact.
      * @param phonePattern is the regex pattern for the number
      * @param phoneMatch is the regex matcher for the number
+     * @param phone is the recieved parameter of the phonenumber
      * @return the method returns the inputted phone number back
      */
     public static String phoneNumberInput(String phone) {
@@ -557,6 +556,7 @@ public final class ContactsApp implements Serializable {
      * addressInput is the method for inputting and checking the phone number for the contact.
      * @param addressPattern is the regex pattern for the address
      * @param addresssMatch is the regex matcher for the address
+     * @param address is the recieved paramter of the address
      * @return the method returns the inputted address
      */
     public static String addressInput(String address) {
@@ -578,11 +578,12 @@ public final class ContactsApp implements Serializable {
      * addressInput is the method for inputting and checking the phone number for the contact.
      * @param emailPattern is the regex pattern for the email address
      * @param emailMatch is the regex matcher for the email address
+     * @param email is the recieved parameter of the email
      * @return the method returns the inputted email address
      */
     public static String emailInput(String email) {
         Boolean validInput = false;
-        Pattern emailPattern = Pattern.compile("[a-z0-9]{1,40}+[\\@]{1}[a-z0-9]{2,8}[\\.]{1}[a-z]{3}|");
+        Pattern emailPattern = Pattern.compile("[\\.a-z0-9]{1,30}+[\\@]{1}[a-z0-9]{2,8}[\\.]{1}[a-z]{1,4}|");
         while (!validInput) {
             email = System.console().readLine();
             Matcher emailMatch = emailPattern.matcher(email);
@@ -590,7 +591,7 @@ public final class ContactsApp implements Serializable {
                 validInput = true;
                 return email;
             } else {
-                System.out.println("Invalid e-mail. Please give a legitimate one, or leave it empty");
+                System.out.println("Invalid e-mail address. Please give a legitimate one, or leave it empty");
             }
         }
         return email;
