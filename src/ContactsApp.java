@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 //I've supressed the warnings for the time being. It complains about the checkfile method
 //and unchecked casts.
 @SuppressWarnings("unchecked")
-public class ContactsApp implements Serializable {
+public final class ContactsApp implements Serializable {
     //File systems and OOS is private static so they will be the same for each method
     public static ArrayList<Contact> contactsList = new ArrayList<Contact>();//<--- This is where the unchecked casts warning is coming from
     public static File contacts = new File("contacts.txt");                  //"All of this 'just works' " -Todd Howard, 2016
@@ -150,7 +150,6 @@ public class ContactsApp implements Serializable {
      * @param address the address of the created Contact object
      * @param email the email address of the created Contact object
      * @param contactsList is written here with the new added contact
-     * 
      */
     public static void addContact() {
         /**
@@ -562,7 +561,7 @@ public class ContactsApp implements Serializable {
      */
     public static String addressInput(String address) {
         Boolean validInput = false;
-        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-zA-Z0-9 ]{1,40}|");
+        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-zA-Z60-9 ]{1,40}|");
         while (!validInput) {
             address = System.console().readLine();
             Matcher addressMatch = addressPattern.matcher(address);
