@@ -16,11 +16,16 @@ This is my Contact management app programmed in java. It can store various infor
 
 -Email address    (Optional)
 
+
 The user interface is comprised solely of CLI and is navigated using prompts and numerical keys. You can view, add, delete
 edit saved contacts. When a contact is added, it will generate a file into the source folder of the compiled program.
 
+
 How to compile and run:
+
 cd src/ && javac *.java && java ContactsApp
+
+
 
 Known issues and bugs:
 
