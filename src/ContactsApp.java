@@ -561,7 +561,7 @@ public final class ContactsApp implements Serializable {
      */
     public static String addressInput(String address) {
         Boolean validInput = false;
-        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-zA-Z60-9 ]{1,40}|");
+        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-zA-Z0-9 ]{1,40}|");
         while (!validInput) {
             address = System.console().readLine();
             Matcher addressMatch = addressPattern.matcher(address);
