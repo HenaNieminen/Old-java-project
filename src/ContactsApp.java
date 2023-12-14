@@ -4,10 +4,7 @@ import java.util.ListIterator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 /**
- * Class ContactsApp
- * There are many variables defined as public static since they are used between several methods.
- * Some of these could still be optimized to keep it more lean and to not rely too much on making
- * them public.
+ * Class ContactsApp is the main class used for the functionalities of the app
  * 
  * The public variables include:
  * @param contactsList arraylist is used as a backbone for the contact management
@@ -37,7 +34,7 @@ public class ContactsApp implements Serializable {
     //There are plenty of variables defined globally, since they are used between methods.
 
     /**
-     * Main method
+     * main method is used for calling methods to activate different functions
      * @param args are unused.  
      * @throws Exception in accordance with the checkFile method to handle runtime exceptions
      * @param console is the system console used to handle user inputs
@@ -90,7 +87,7 @@ public class ContactsApp implements Serializable {
         }
     }
     /**
-     * checkFile method
+     * checkFile method is used to check through the saved file
      * @throws Exception for runtime exceptions
      * @param contacts is used here to check the file integrity and to load the contents
      * to the arraylist
@@ -119,7 +116,7 @@ public class ContactsApp implements Serializable {
         }
     }
     /**
-     * writeToFile method
+     * writeToFile method is used in editing and adding a contact
      * @param oos is used here to write to the file
      */
     public static void writeToFile() {
@@ -145,7 +142,7 @@ public class ContactsApp implements Serializable {
         }
     }
     /**
-     * method addContact
+     * addContact is the method for adding contacts
      * @param id
      * @param firstName
      * @param lastName
@@ -166,7 +163,7 @@ public class ContactsApp implements Serializable {
             String address = "";
             String email = "";
             System.out.println("Give the ID of the contact");
-            id = IdInput(id);
+            id = idInput(id);
             System.out.println("Give the first name");
             firstName = firstNameInput(firstName);
             System.out.println("Give the last name");
@@ -185,7 +182,7 @@ public class ContactsApp implements Serializable {
             String userConf = System.console().readLine();
     }
     /**
-     * method readContact
+     * readContact method is used to read from the filled arraylist
      * @param exit is used to control the loop for displaying the read menu.
      * @param readChoice is used to control the switch for different options
      */
@@ -227,9 +224,8 @@ public class ContactsApp implements Serializable {
         }
     }
     /**
-     * Method viewAll
+     * viewAll method is used for viewing contacts loaded into the arraylist
      * 
-     * Used for viewing contacts loaded into the arraylist
      * @param capacity is the size taken from the arraylist for contacts. Used to determine if
      * the arraylist is empty or the file is missing completely
      * @param lister is used here to go through the whole contact arraylist and print them out
@@ -258,7 +254,7 @@ public class ContactsApp implements Serializable {
         System.out.println("--------------------");
     }
     /**
-     * Method select
+     * select method is used for the user to search from the list
      * @param lister is used to go through the arraylist
      * @param capacity is used to check the size of the contactslist as in the viewAll method
      * @param searchName is used to search for the contact by its first name
@@ -309,6 +305,7 @@ public class ContactsApp implements Serializable {
         System.out.println("--------------------");
     }
     /**
+     * deleteContact method is used for the user to delete something from the arraylist and file
      * @param lister is reset here to the first index of the arraylist in order to not get it stuck
      * to a specific index from search and viewing methods
      * @param exit is used to control the while loop that asks the user which contact to delete
@@ -357,6 +354,9 @@ public class ContactsApp implements Serializable {
             }
         }
     }
+    /**
+     * editContact method is used for editing saved contacts in the arraylist and file
+     */
     public static void editContact() {
         //Zeroes the listIterator index in order to not get stuck into one contact
         lister = contactsList.listIterator(0);
@@ -382,7 +382,7 @@ public class ContactsApp implements Serializable {
                     case "1":
                         String newId = "";
                         System.out.println("Enter the new ID");
-                        newId = IdInput(newId);
+                        newId = idInput(newId);
                         contactsList.get(editIndex).setId(newId);
                         writeToFile();
                         System.out.println("ID updated!");
@@ -459,7 +459,13 @@ public class ContactsApp implements Serializable {
             }
         }
     }
-    public static String IdInput(String id) {
+    /**
+     * idInput is the method for inputting and checking an SSN number for the contact
+     * @param idPattern is the regex pattern for the ID
+     * @param idMatch is the regex matcher for the ID
+     * @return the method returns the set ID back
+     */
+    public static String idInput(String id) {
         Boolean validInput = false;
         Pattern idPattern = Pattern.compile("[0-3]{1}[1-9]{1}[0-9]{2}+[-A][0-9]{3}[A-Z]{1}");
         while (!validInput) {
@@ -506,7 +512,7 @@ public class ContactsApp implements Serializable {
     }
     public static String phoneNumberInput(String phone) {
         Boolean validInput = false;
-        Pattern phonePattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}");
+        Pattern phonePattern = Pattern.compile("\\d");
         while (!validInput) {
             phone = System.console().readLine();
             Matcher phoneMatch = phonePattern.matcher(phone);
@@ -521,7 +527,7 @@ public class ContactsApp implements Serializable {
     }
     public static String addressInput(String address) {
         Boolean validInput = false;
-        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}");
+        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-z][20]|");
         while (!validInput) {
             address = System.console().readLine();
             Matcher addressMatch = addressPattern.matcher(address);
@@ -536,7 +542,7 @@ public class ContactsApp implements Serializable {
     }
     public static String emailInput(String email) {
         Boolean validInput = false;
-        Pattern emailPattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}");
+        Pattern emailPattern = Pattern.compile("\\D|");
         while (!validInput) {
             email = System.console().readLine();
             Matcher emailMatch = emailPattern.matcher(email);
