@@ -5,8 +5,8 @@ import java.util.ArrayList;
  * Contact class contains the object which will be saved to the file
  * It implements the Serializable interface for use with the ObjectStreams and arraylists.
  */
-public class Contact implements Serializable { //Class renamed to reflect it more clearly
-                                        //Info class name didn't make much sense and was confusing
+public class Contact implements Serializable {  //Class renamed to reflect it more clearly
+                                                //Info class name didn't make much sense and was confusing
     public String id;
     public String firstName;
     public String lastName;

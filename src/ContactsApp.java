@@ -360,6 +360,13 @@ public class ContactsApp implements Serializable {
     }
     /**
      * editContact method is used for editing saved contacts in the arraylist and file
+     * @param exit used to control the loop for editing
+     * @param newId for inputting a new ID number
+     * @param newFirst for inputting a new first name
+     * @param newLast for inputting a new last name
+     * @param newPhone for inputting a new phone number
+     * @param newAddress for inputting a new address
+     * @param newEmail for inputting a new email address
      */
     public static void editContact() {
         //Zeroes the listIterator index in order to not get stuck into one contact
@@ -471,7 +478,7 @@ public class ContactsApp implements Serializable {
      */
     public static String idInput(String id) {
         Boolean validInput = false;
-        Pattern idPattern = Pattern.compile("[0-3]{1}[1-9]{1}[0-9]{2}+[-A][0-9]{3}[A-Z]{1}");
+        Pattern idPattern = Pattern.compile("[0-3]{1}[1-9]{1}[0-1]{1}[0-9]{3}+[\\+-A][0-9]{3}[A-Z0-9]{1}");
         while (!validInput) {
             id = System.console().readLine();
             Matcher idMatch = idPattern.matcher(id);
@@ -492,7 +499,7 @@ public class ContactsApp implements Serializable {
      */
     public static String firstNameInput(String first) {
         Boolean validInput = false;
-        Pattern firstNamePattern = Pattern.compile("[A-Z]{1}[a-z]{1,11}");
+        Pattern firstNamePattern = Pattern.compile("[A-Z]{1}[a-zA-Z ]{1,11}");
         while (!validInput) {
             first = System.console().readLine();
             Matcher firstNameMatch = firstNamePattern.matcher(first);
@@ -505,9 +512,15 @@ public class ContactsApp implements Serializable {
         }
         return first;
     }
+    /**
+     * lastNameInput is the method for inputting and checking the last name for the contact.
+     * @param lastNamePattern is the regex pattern for the last name
+     * @param lastNameMatch is the regex matcher for the last name
+     * @return the method returns the inputted surname back
+     */
     public static String lastNameInput(String last) {
         Boolean validInput = false;
-        Pattern lastNamePattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}");
+        Pattern lastNamePattern = Pattern.compile("[A-Z]{1}[a-zA-Z ]{1,20}");
         while (!validInput) {
             last = System.console().readLine();
             Matcher lastNameMatch = lastNamePattern.matcher(last);
@@ -520,6 +533,12 @@ public class ContactsApp implements Serializable {
         }
         return last;
     }
+    /**
+     * phoneNumberInput is the method for inputting and checking the phone number for the contact.
+     * @param phonePattern is the regex pattern for the number
+     * @param phoneMatch is the regex matcher for the number
+     * @return the method returns the inputted phone number back
+     */
     public static String phoneNumberInput(String phone) {
         Boolean validInput = false;
         Pattern phonePattern = Pattern.compile("\\+358[\\d]{9}");
@@ -535,9 +554,15 @@ public class ContactsApp implements Serializable {
         }
         return phone;
     }
+    /**
+     * addressInput is the method for inputting and checking the phone number for the contact.
+     * @param addressPattern is the regex pattern for the address
+     * @param addresssMatch is the regex matcher for the address
+     * @return the method returns the inputted address
+     */
     public static String addressInput(String address) {
         Boolean validInput = false;
-        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}|");
+        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-zA-Z0-9 ]{1,40}|");
         while (!validInput) {
             address = System.console().readLine();
             Matcher addressMatch = addressPattern.matcher(address);
@@ -545,14 +570,20 @@ public class ContactsApp implements Serializable {
                 validInput = true;
                 return address;
             } else {
-                System.out.println("Invalid address");
+                System.out.println("Invalid address. Please give a legitimate one, or leave it empty");
             }
         }
         return address;
     }
+    /**
+     * addressInput is the method for inputting and checking the phone number for the contact.
+     * @param emailPattern is the regex pattern for the email address
+     * @param emailMatch is the regex matcher for the email address
+     * @return the method returns the inputted email address
+     */
     public static String emailInput(String email) {
         Boolean validInput = false;
-        Pattern emailPattern = Pattern.compile("[a-z]{1,20}|");
+        Pattern emailPattern = Pattern.compile("[a-z0-9]{1,40}+[\\@]{1}[a-z0-9]{2,8}[\\.]{1}[a-z]{3}|");
         while (!validInput) {
             email = System.console().readLine();
             Matcher emailMatch = emailPattern.matcher(email);
@@ -560,7 +591,7 @@ public class ContactsApp implements Serializable {
                 validInput = true;
                 return email;
             } else {
-                System.out.println("Invalid e-mail.");
+                System.out.println("Invalid e-mail. Please give a legitimate one, or leave it empty");
             }
         }
         return email;
