@@ -223,12 +223,10 @@ public final class ContactsApp implements Serializable {
     /**
      * viewAll method is used for viewing contacts loaded into the arraylist
      * 
-     * @param capacity is the size taken from the arraylist for contacts. Used to determine if
-     * the arraylist is empty or the file is missing completely
-     * @param lister is used here to go through the whole contact arraylist and print them out
-     * into the console. It is used togheter with the ListIterator classes hasNext method in a 
-     * while loop.
-     * @param conactsList is used in conjunction with the listIterator
+     * @param capacity is the size taken from the arraylist for contacts. 
+     * Used to determine if the arraylist is empty or the file is missing completely
+     * @param lister is used here to go through the whole contact arraylist and print contacts out.
+     * @param conactsList is used in conjunction with the listIterator object lister
      */
     public static void viewAll() {
         /**
@@ -256,12 +254,10 @@ public final class ContactsApp implements Serializable {
      * @param lister is used to go through the arraylist
      * @param capacity is used to check the size of the contactslist as in the viewAll method
      * @param searchName is used to search for the contact by its first name
-     * @param searchInput is a Contact object that goes through the arraylist with the help
-     * of listiterator and applies itself as the object the first name equals to in the list
+     * @param searchInput is a Contact object that goes through the arraylist
      * @param exit is used to control the while loop for the console input
-     * @param indexTrack is used to amount the index in which the target contact is and will
-     * apply itself to the publically defined editIndex
-     * 
+     * @param indexTrack is used to amount the index where the target contact is
+     * @param editIndex indexTrack is then applied to this value
      */
     public static void select() {
         //Why select instead of search as the name? Well, this method will also be used within the method for editing and deleting contacts
@@ -304,9 +300,9 @@ public final class ContactsApp implements Serializable {
     }
     /**
      * deleteContact method is used for the user to delete something from the arraylist and file
-     * @param lister is reset here to the first index of the arraylist in order to not get it stuck
-     * to a specific index from search and viewing methods
+     * @param lister is reset to the first index of the arraylist
      * @param exit is used to control the while loop that asks the user which contact to delete
+     * @param contactsList uses the remove method with the editIndex as a parameter
      */
     public static void deleteContact() {
         //Added the view all method so the user can see all available contacts for deletion
