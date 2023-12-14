@@ -36,4 +36,4 @@ Known issues and bugs:
 -There is no escape key for mistyped input selections. This can be very annoying at times
 
 -The validation of the contact information is finicky at best. The SSN can accept non-sensical time frames eg. 39th of Duodecimber,
-the phone number can be assigned to non-existant operators, etc.
+the phone number can be assigned to non-existant operators, umlauted characters are not accepted, etc.
