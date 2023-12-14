@@ -512,7 +512,7 @@ public class ContactsApp implements Serializable {
     }
     public static String phoneNumberInput(String phone) {
         Boolean validInput = false;
-        Pattern phonePattern = Pattern.compile("\\d");
+        Pattern phonePattern = Pattern.compile("\\+358[\\d]{9}");
         while (!validInput) {
             phone = System.console().readLine();
             Matcher phoneMatch = phonePattern.matcher(phone);
@@ -527,7 +527,7 @@ public class ContactsApp implements Serializable {
     }
     public static String addressInput(String address) {
         Boolean validInput = false;
-        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-z][20]|");
+        Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-z]{1,20}|");
         while (!validInput) {
             address = System.console().readLine();
             Matcher addressMatch = addressPattern.matcher(address);
@@ -542,7 +542,7 @@ public class ContactsApp implements Serializable {
     }
     public static String emailInput(String email) {
         Boolean validInput = false;
-        Pattern emailPattern = Pattern.compile("\\D|");
+        Pattern emailPattern = Pattern.compile("[a-z]{1,20}|");
         while (!validInput) {
             email = System.console().readLine();
             Matcher emailMatch = emailPattern.matcher(email);
@@ -556,33 +556,3 @@ public class ContactsApp implements Serializable {
         return email;
     }
 }
-//20.11.2023
-//The main hub of the code which will call all classes and methods and execute them for the user
-//Possible changes coming to the structure and potential expansions for classes when necessary
-//The basis of the user selection will be done with a switch case that will run until user decides
-//to stop. The empty selections will call the respective classes and methods once done.
-//Decided to use string instead of int for the user input to avoid making too much of a mess with exception
-//catching. If it gets hairy down the line, I will probably change things around.
-
-//29.11.2023
-//I managed to figure out how to create files and made a method that creates it if not present
-//However, getting the contacts added there is a new hiccup since the object referred here
-//doesn't change depending on how many people were saved on the file, so there effectively is just one
-//contact slot. (And unreadable at that)
-//I need to make a method that scans the file for objects and creates the contact in a way that
-//increments numbers into the creation
-//
-
-//5.12.2023
-//After so much fighting with the code, and very shoddy construction, I decided to start the build again
-//from the starting draft. I renamed all files, classes, etc. more clearly to help make it more readable
-//and moved all tenous functionality to the contactsApp class in order to make it easier to compile and
-//execute the code.
-//
-//
-//
-//6.12.2023
-//Great success! I finally have a good gameplan for the whole project and made major strides. The only points
-//of concern and refining now is further control over the contacts and getting user validation done.
-//I highly doubt I can make it for every single input, but at least the ID and both first and lastnames
-//
