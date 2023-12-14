@@ -3,7 +3,6 @@ import java.util.ArrayList;
 //Serializable interface also used here to utilize ObjectOutuputStream and to not cause IOExceptions
 /**
  * Contact class contains the object which will be saved to the file
- * 
  * It implements the Serializable interface for use with the ObjectStreams and arraylists.
  */
 public class Contact implements Serializable { //Class renamed to reflect it more clearly
@@ -130,4 +129,3 @@ public class Contact implements Serializable { //Class renamed to reflect it mor
         this.email = newEmail;
     }
 }
-//This class will work as a constructor of the contact.

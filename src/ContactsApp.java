@@ -143,13 +143,14 @@ public class ContactsApp implements Serializable {
     }
     /**
      * addContact is the method for adding contacts
-     * @param id
-     * @param firstName
-     * @param lastName
-     * @param phoneNumber
-     * @param address
-     * @param email
-     * The method contains all variables for creating a Contact object
+     * @param id the id of the created Contact object
+     * @param firstName the first name of the created Contact object
+     * @param lastName the last name of the created Contact object
+     * @param phoneNumber the phone number of the created Contact object
+     * @param address the address of the created Contact object
+     * @param email the email address of the created Contact object
+     * @param contactsList is written here with the new added contact
+     * 
      */
     public static void addContact() {
         /**
@@ -185,6 +186,8 @@ public class ContactsApp implements Serializable {
      * readContact method is used to read from the filled arraylist
      * @param exit is used to control the loop for displaying the read menu.
      * @param readChoice is used to control the switch for different options
+     * @param lister is reset to the first index here in order to function properly
+     * @param contactsList is referred in listIterator objects method
      */
     public static void readContact() {
         //readContact method will read all the contacts within the file. 
@@ -231,6 +234,7 @@ public class ContactsApp implements Serializable {
      * @param lister is used here to go through the whole contact arraylist and print them out
      * into the console. It is used togheter with the ListIterator classes hasNext method in a 
      * while loop.
+     * @param conactsList is used in conjunction with the listIterator
      */
     public static void viewAll() {
         /**
@@ -480,6 +484,12 @@ public class ContactsApp implements Serializable {
         }
         return id;
     }
+    /**
+     * firstNameInput is the method for inputtting and checking the first name for the contact
+     * @param firstNamePattern is the regex pattern for the first name
+     * @param firstNameMatch is the regex matcher for the first name
+     * @return the method returns the inputted name back
+     */
     public static String firstNameInput(String first) {
         Boolean validInput = false;
         Pattern firstNamePattern = Pattern.compile("[A-Z]{1}[a-z]{1,11}");
