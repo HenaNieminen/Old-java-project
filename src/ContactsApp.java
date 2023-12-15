@@ -24,7 +24,7 @@ public final class ContactsApp implements Serializable {
     public static File contacts = new File("contacts.txt");                  //"All of this 'just works' " -Todd Howard, 2016
     public static ObjectOutputStream oos;
     public static ObjectInputStream ois;
-    public static ListIterator lister;
+    public static ListIterator lister = contactsList.listIterator();
     public static boolean found;
     public static int editIndex;
 
@@ -186,7 +186,6 @@ public final class ContactsApp implements Serializable {
     public static void readContact() {
         //readContact method will read all the contacts within the file. 
         //However, not directly from the file and rather from the arraylist that works as an intermediary
-        lister = contactsList.listIterator();
         boolean exit = false;
         while (!exit) {
             System.out.println("1. View all");
@@ -234,7 +233,6 @@ public final class ContactsApp implements Serializable {
          * print them all out for the user to see
          */
         int capacity = contactsList.size();
-        lister = contactsList.listIterator();
         /**
          * It uses a listIterator object predefined classwide for use in other methods as well.
          * It also keeps track of the capacity of the list and will notify the user if the list
@@ -263,7 +261,6 @@ public final class ContactsApp implements Serializable {
         //Why select instead of search as the name? Well, this method will also be used within the method for editing and deleting contacts
         int capacity = contactsList.size();
         String searchName = "";
-        lister = contactsList.listIterator();
         //Index track will be used to see at which part of the arraylist the select method is at
         int indexTrack = 0;
         found = false;
