@@ -2,6 +2,10 @@
 
 By: Henri Nieminen
 
+Screencast link (Dropbox):
+
+https://www.dropbox.com/scl/fi/iunvgayj3peorrybl03l9/Screencast-Henri-Nieminen.mp4?rlkey=1rseoe4p0hnyjqwj4jv693gcx&dl=0
+
 This is my Contact management app programmed in java. It can store various information from a given subject. Including:
 
 -ID (Finnish SSN)
