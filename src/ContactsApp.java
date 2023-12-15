@@ -469,7 +469,7 @@ public final class ContactsApp implements Serializable {
      */
     public static String idInput(String id) {
         Boolean validInput = false;
-        Pattern idPattern = Pattern.compile("[0-3]{1}[1-9]{1}[0-1]{1}[0-9]{3}+[\\+-A][0-9]{3}[A-Z0-9]{1}");
+        Pattern idPattern = Pattern.compile("[0-3]{1}[0-9]{1}[0-1]{1}[0-9]{3}[\\+|\\-|A]{1}[0-9]{3}[A-Z0-9]{1}");
         while (!validInput) {
             id = System.console().readLine();
             Matcher idMatch = idPattern.matcher(id);
