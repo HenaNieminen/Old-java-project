@@ -24,7 +24,7 @@ public final class ContactsApp implements Serializable {
     public static File contacts = new File("contacts.txt");                  //"All of this 'just works' " -Todd Howard, 2016
     public static ObjectOutputStream oos;
     public static ObjectInputStream ois;
-    public static ListIterator lister = contactsList.listIterator();
+    public static ListIterator lister;
     public static boolean found;
     public static int editIndex;
 
@@ -186,6 +186,7 @@ public final class ContactsApp implements Serializable {
     public static void readContact() {
         //readContact method will read all the contacts within the file. 
         //However, not directly from the file and rather from the arraylist that works as an intermediary
+        lister = contactsList.listIterator();
         boolean exit = false;
         while (!exit) {
             System.out.println("1. View all");
@@ -259,6 +260,7 @@ public final class ContactsApp implements Serializable {
      */
     public static void select() {
         //Why select instead of search as the name? Well, this method will also be used within the method for editing and deleting contacts
+        lister = contactsList.listIterator();
         int capacity = contactsList.size();
         String searchName = "";
         //Index track will be used to see at which part of the arraylist the select method is at
@@ -532,7 +534,7 @@ public final class ContactsApp implements Serializable {
      */
     public static String phoneNumberInput(String phone) {
         Boolean validInput = false;
-        Pattern phonePattern = Pattern.compile("\\+358[40|41|42|43|44|45|46|47|48|49|50|51|52|53|54|55]{1}[\\d]{8}");
+        Pattern phonePattern = Pattern.compile("\\+358[40|41|42|43|44|45|46|47|48|49|50|51|52|53|54|55]{1}[0-9]{8}");
         while (!validInput) {
             phone = System.console().readLine();
             Matcher phoneMatch = phonePattern.matcher(phone);
