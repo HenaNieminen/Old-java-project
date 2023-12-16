@@ -534,7 +534,7 @@ public final class ContactsApp implements Serializable {
      */
     public static String phoneNumberInput(String phone) {
         Boolean validInput = false;
-        Pattern phonePattern = Pattern.compile("\\+358[40|41|42|43|44|45|46|47|48|49|50|51|52|53|54|55]{1}[0-9]{8}");
+        Pattern phonePattern = Pattern.compile("\\+358(?:40|41|42|43|44|45|46|49|50|51|52|53|54|55)[0-9]{7}");
         while (!validInput) {
             phone = System.console().readLine();
             Matcher phoneMatch = phonePattern.matcher(phone);
