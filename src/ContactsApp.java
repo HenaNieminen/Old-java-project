@@ -468,7 +468,9 @@ public final class ContactsApp implements Serializable {
      */
     public static String idInput(String id) {
         Boolean validInput = false;
-        Pattern idPattern = Pattern.compile("[0-3]{1}[0-9]{1}[0-1]{1}[0-9]{3}[\\+|\\-|A]{1}[0-9]{3}[A-Z0-9]{1}");
+        //Getting the validation to take into attention specific months may take time, but the capture group for specific day ranges
+        //is way better than just allowing 39 days in a month.
+        Pattern idPattern = Pattern.compile("(?:[0-2]{1}[0-9]{1}|[3]{1}[0-1]{1})(?:[0]{1}[0-9]{1}|[1][0-2]{1})[0-9]{2}[\\+|\\-|A]{1}[0-9]{3}[A-Z0-9]{1}");
         while (!validInput) {
             id = System.console().readLine();
             Matcher idMatch = idPattern.matcher(id);
