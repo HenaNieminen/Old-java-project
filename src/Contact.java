@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
-//Serializable interface also used here to utilize ObjectOutuputStream and to not cause IOExceptions
+//Serializable interface also used here to utilize ObjectOutuputStream
 /**
  * Contact class contains the object which will be saved to the file
  * @author Henri Nieminen
@@ -11,8 +11,8 @@ import java.util.ArrayList;
  * @param address works as the address of the object
  * @param email works as the email address of the object
  */
-public final class Contact implements Serializable {  //Class renamed to reflect it more clearly
-                                                //Info class name didn't make much sense and was confusing
+public final class Contact implements Serializable {
+                                                
     public String id;
     public String firstName;
     public String lastName;
