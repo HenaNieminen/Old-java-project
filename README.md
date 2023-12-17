@@ -41,3 +41,10 @@ Known issues and bugs:
 
 -The validation of the contact information is finicky at best. The SSN can accept non-sensical time frames eg. 39th of Duodecimber,
 umlauted characters are not accepted, etc.
+
+
+Fixed after screencast:
+
+-Phone validation
+
+-SSN validation no longer accepts non-existant days or months. Will not take into attention leap years or specific day amounts within a month 
