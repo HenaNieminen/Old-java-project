@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
-//Serializable interface also used here to utilize ObjectOutuputStream
+
 /**
  * Contact class contains the object which will be saved to the file
  * @author Henri Nieminen
