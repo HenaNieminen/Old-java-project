@@ -246,7 +246,7 @@ public final class ContactsApp implements Serializable {
          */
         System.out.println("-------------------");
         while (lister.hasNext()) {
-            System.out.println(indexTrack + ": " + lister.next());
+            System.out.println("Slot " + indexTrack + ": " + lister.next());
             indexTrack++;
         }
         if (capacity == 0) {
@@ -293,7 +293,7 @@ public final class ContactsApp implements Serializable {
             //and compares it with the user given input.
             Contact searchInput = (Contact)lister.next();
             if (searchInput.getFirstName().equals(searchName)) {
-                System.out.println(indexTrack + ": " + searchInput);
+                System.out.println("Slot " + indexTrack + ": " + searchInput);
                 for (int i = 0; i < capacity; i++) {
                     editArray[i] += indexTrack;
                     editIndex = indexTrack;
@@ -306,12 +306,16 @@ public final class ContactsApp implements Serializable {
             indexTrack++;
         }
         if (arrayTrack > 1) {
+            boolean selected = false;
             System.out.println("--------------------");
-            System.out.println("Which " + searchName + " do you want to select? Enter their index on the list");
-            try {
-                editIndex = Integer.parseInt(console.readLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Give the number of which contact to select");
+            System.out.println("Which " + searchName + " do you want to select? Enter their slot on the list");
+            while (!selected) {
+                try {
+                    editIndex = Integer.parseInt(console.readLine());
+                    selected = true;
+                } catch (NumberFormatException e) {
+                    System.out.println("Give the slot number of which contact to select");
+                }
             }
         }
         if (!found) {
