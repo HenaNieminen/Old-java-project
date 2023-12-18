@@ -26,6 +26,7 @@ public final class ContactsApp implements Serializable {
     public static ObjectInputStream ois;
     public static ListIterator lister;
     public static boolean found;
+    public static int [] editArray = new int[1];
     public static int editIndex;
 
     /**
@@ -82,6 +83,13 @@ public final class ContactsApp implements Serializable {
         }
     }
     /**
+     * userConfirm has a blank console readline only used to pace the program for the user
+     */
+    public static void userConfirm() {
+        System.out.println("Press enter to continue");
+        System.console().readLine();
+    }
+    /**
      * checkFile method is used to check through the saved file
      * @throws Exception for runtime exceptions
      * @param contacts is used here to check the file integrity and to load the contents
@@ -105,8 +113,7 @@ public final class ContactsApp implements Serializable {
                 //I replaced the stacktrace with a dialogue that just says 'you done goofed'
                 System.out.println("Your file is corrupt. Your previously saved contacts are lost");
                 System.out.println("To generate a new file, add a new contact");
-                System.out.println("Press enter to continue");
-                String userConf = System.console().readLine();
+                userConfirm();
             }
         }
     }
@@ -173,8 +180,7 @@ public final class ContactsApp implements Serializable {
             contactsList.add(new Contact(id, firstName, lastName, phoneNumber, address, email));
             writeToFile();
             System.out.println("-----------------");
-            System.out.println("Press enter to continue");
-            String userConf = System.console().readLine();
+            userConfirm();
     }
     /**
      * readContact method is used to read from the filled arraylist
@@ -201,14 +207,12 @@ public final class ContactsApp implements Serializable {
                     //I realized that if it was inside the method, it could possibly cause trouble for the editing and deleting functions
                     lister = contactsList.listIterator(0);
                     viewAll();
-                    System.out.println("Press enter to continue");
-                    String userConf = System.console().readLine();
+                    userConfirm();
                     break;
                 case "2":
                     lister = contactsList.listIterator(0);
                     select();
-                    System.out.println("Press enter to continue");
-                    String userConf2 = System.console().readLine();
+                    userConfirm();
                     break;
                 case "3":
                     exit = true;
@@ -234,6 +238,7 @@ public final class ContactsApp implements Serializable {
          * print them all out for the user to see
          */
         int capacity = contactsList.size();
+        int indexTrack = 0;
         /**
          * It uses a listIterator object predefined classwide for use in other methods as well.
          * It also keeps track of the capacity of the list and will notify the user if the list
@@ -241,7 +246,8 @@ public final class ContactsApp implements Serializable {
          */
         System.out.println("-------------------");
         while (lister.hasNext()) {
-            System.out.println(lister.next());
+            System.out.println(indexTrack + ": " + lister.next());
+            indexTrack++;
         }
         if (capacity == 0) {
             System.out.println("Your list is empty, or the file is missing");
@@ -259,12 +265,15 @@ public final class ContactsApp implements Serializable {
      * @param editIndex indexTrack is then applied to this value
      */
     public static void select() {
-        //Why select instead of search as the name? Well, this method will also be used within the method for editing and deleting contacts
         lister = contactsList.listIterator();
+        int userSelect = 0;
+        Console console = System.console();
         int capacity = contactsList.size();
         String searchName = "";
         //Index track will be used to see at which part of the arraylist the select method is at
         int indexTrack = 0;
+        int arrayTrack = 0;
+        int [] editArray = new int[capacity];
         found = false;
         Boolean exit = false;
         while (!exit) {
@@ -284,13 +293,26 @@ public final class ContactsApp implements Serializable {
             //and compares it with the user given input.
             Contact searchInput = (Contact)lister.next();
             if (searchInput.getFirstName().equals(searchName)) {
-                System.out.println(searchInput);
-                found = true;
-                editIndex = indexTrack;
+                System.out.println(indexTrack + ": " + searchInput);
+                for (int i = 0; i < capacity; i++) {
+                    editArray[i] += indexTrack;
+                    editIndex = indexTrack;
+                    found = true;
+                }
+                arrayTrack++;
                 //Edit index is used for the edit and delete functions to delete or edit objects stored
                 //at the specific index
             }
             indexTrack++;
+        }
+        if (arrayTrack > 1) {
+            System.out.println("--------------------");
+            System.out.println("Which " + searchName + " do you want to select? Enter their index on the list");
+            try {
+                editIndex = Integer.parseInt(console.readLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Give the number of which contact to select");
+            }
         }
         if (!found) {
             System.out.println("Contact not found.");
@@ -299,6 +321,7 @@ public final class ContactsApp implements Serializable {
     }
     /**
      * deleteContact method is used for the user to delete something from the arraylist and file
+     * @param Console is there to read the integer of the index given by the user
      * @param lister is reset to the first index of the arraylist
      * @param exit is used to control the while loop that asks the user which contact to delete
      * @param contactsList uses the remove method with the editIndex as a parameter
@@ -313,27 +336,24 @@ public final class ContactsApp implements Serializable {
             String userConfExit = System.console().readLine();
             exit = true;
         }
+        select();
         while (!exit) {
-            select();
             if (found) {
                 System.out.println("Are you sure you want to delete this contact? y/n?");
                 String userChoice = System.console().readLine();
                 switch (userChoice.toLowerCase()) {
                     case "y":
-                        //Removed the lambda and made it more consistent with the editing function
                         contactsList.remove(editIndex);
                         writeToFile();
                         System.out.println("Contact deleted");
                         System.out.println("---------------");
-                        System.out.println("Press enter to continue");
-                        String userConf2 = System.console().readLine();
+                        userConfirm();
                         exit = true;
                         break;
                     case "n":
                         System.out.println("Deletion aborted");
                         System.out.println("---------------");
-                        System.out.println("Press enter to continue");
-                        String userConf3 = System.console().readLine();
+                        userConfirm();
                         exit = true;
                         break;
                     default:
@@ -387,8 +407,7 @@ public final class ContactsApp implements Serializable {
                         writeToFile();
                         System.out.println("ID updated!");
                         System.out.println("---------------");
-                        System.out.println("Press enter to continue");
-                        String userConf = System.console().readLine();
+                        userConfirm();
                         break;
                     case "2":
                         String newFirst = "";
@@ -398,8 +417,7 @@ public final class ContactsApp implements Serializable {
                         writeToFile();
                         System.out.println("First name updated!");
                         System.out.println("---------------");
-                        System.out.println("Press enter to continue");
-                        String userConf1 = System.console().readLine();
+                        userConfirm();
                         break;
                     case "3":
                         String newLast = "";
@@ -409,8 +427,7 @@ public final class ContactsApp implements Serializable {
                         writeToFile();
                         System.out.println("Last name updated!");
                         System.out.println("---------------");
-                        System.out.println("Press enter to continue");
-                        String userConf2 = System.console().readLine();
+                        userConfirm();
                         break;
                     case "4":
                         String newPhone = "";
@@ -420,8 +437,7 @@ public final class ContactsApp implements Serializable {
                         writeToFile();
                         System.out.println("Phone number updated!");
                         System.out.println("---------------");
-                        System.out.println("Press enter to continue");
-                        String userConf3 = System.console().readLine();
+                        userConfirm();
                         break;
                     case "5":
                         String newAddress = "";
@@ -431,8 +447,7 @@ public final class ContactsApp implements Serializable {
                         writeToFile();
                         System.out.println("Address updated!");
                         System.out.println("---------------");
-                        System.out.println("Press enter to continue");
-                        String userConf4 = System.console().readLine();
+                        userConfirm();
                         break;
                     case "6":
                         String newEmail = "";
@@ -442,8 +457,7 @@ public final class ContactsApp implements Serializable {
                         writeToFile();
                         System.out.println("Email updated!");
                         System.out.println("---------------");
-                        System.out.println("Press enter to continue");
-                        String userConf5 = System.console().readLine();
+                        userConfirm();
                         break;
                     case "7":
                         exit = true;
