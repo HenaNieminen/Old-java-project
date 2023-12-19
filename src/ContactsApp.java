@@ -312,8 +312,6 @@ public final class ContactsApp implements Serializable {
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Give the slot number of which contact to select");
-                } catch (Exception e) {
-                    System.out.println("Unexpected problem");
                 }
             }
         }
