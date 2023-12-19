@@ -51,6 +51,7 @@ Fixed after screencast:
 
 -User can now safely store people with same given names.
 
+
 Updated self evaluation:
 
 I'd bump up my intial self evaluation from the intial 1-2 to 2-3 after these fixes.
