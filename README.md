@@ -54,4 +54,4 @@ Fixed after screencast:
 
 Updated self evaluation:
 
-I'd bump up my intial self evaluation from the intial 1-2 to 2-3 after these fixes.
+I'd bump up my self evaluation from the intial 1-2 to 2-3 after these fixes.
