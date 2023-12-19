@@ -48,3 +48,5 @@ Fixed after screencast:
 -Phone validation
 
 -SSN validation no longer accepts non-existant days or months. Will not take into attention leap years or specific day amounts within a month 
+
+-User can now safely store people with same given names.
