@@ -50,3 +50,7 @@ Fixed after screencast:
 -SSN validation no longer accepts non-existant days or months. Will not take into attention leap years or specific day amounts within a month 
 
 -User can now safely store people with same given names.
+
+Updated self evaluation:
+
+I'd bump up my intial self evaluation from the intial 1-2 to 2-3 after these fixes.
