@@ -30,7 +30,7 @@ public final class ContactsApp implements Serializable {
     /**
      * main method is used for calling methods to activate different functions
      * @param args are unused.  
-     * @throws Exception in accordance with the checkFile method to handle runtime exceptions
+     * @throws Exception in accordance with the checkFile method to handle exceptions
      * @param console is the system console used to handle user inputs
      * @param shutDown is used to exit the main loop of the program
      * @param userChoice is used to take the user input for the selection
@@ -258,7 +258,7 @@ public final class ContactsApp implements Serializable {
      * @param exit is used to control the while loop for the console input
      * @param indexTrack is used to amount the index where the target contact is
      * @param countTrack is used to check how many contacts were logged into the editIndex
-     * @param editIndex indexTrack is then applied to this value
+     * @param editIndex indexTrack is applied to this value
      */
     public static void select() {
         lister = contactsList.listIterator();
