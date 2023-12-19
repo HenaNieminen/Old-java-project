@@ -6,7 +6,6 @@ import java.util.regex.Matcher;
 /**
  * Class ContactsApp is the main class used for the functionalities of the app
  * @author Henri Nieminen
- * The public variables include:
  * @param contactsList arraylist is used as a backbone for the contact management
  * @param contacts creates the file for saving contacts into. It will be created in the source directory.
  * @param oos is the objectOutputStream used to write into the file
@@ -19,7 +18,6 @@ import java.util.regex.Matcher;
 //I've supressed the warnings for the single unchecked operation
 @SuppressWarnings("unchecked")
 public final class ContactsApp implements Serializable {
-    //File systems and OOS is private static so they will be the same for each method
     public static ArrayList<Contact> contactsList = new ArrayList<Contact>();//<--- This is where the unchecked casts warning is coming from
     public static File contacts = new File("contacts.txt");                  //"All of this 'just works' " -Todd Howard, 2016
     public static ObjectOutputStream oos;
@@ -138,9 +136,6 @@ public final class ContactsApp implements Serializable {
              */
             e.printStackTrace();
             System.out.println("An unexpected error has occurred");
-            //Might be necessary to still have a stack trace here
-            //I cleared out all the unnecessary throws when it can just be declared here and print
-            //the stack trace
         }
     }
     /**
@@ -340,7 +335,6 @@ public final class ContactsApp implements Serializable {
      * @param contactsList uses the remove method with the editIndex as a parameter
      */
     public static void deleteContact() {
-        //Added the view all method so the user can see all available contacts for deletion
         lister = contactsList.listIterator(0);
         boolean exit = false;
         viewAll();
@@ -394,7 +388,6 @@ public final class ContactsApp implements Serializable {
         //Zeroes the listIterator index in order to not get stuck into one contact
         lister = contactsList.listIterator(0);
         boolean exit = false;
-        //ditto
         viewAll();
         if (contactsList.size() == 0) {
             System.out.println("No contacts to edit. Press enter to continue");
@@ -607,7 +600,7 @@ public final class ContactsApp implements Serializable {
      */
     public static String emailInput(String email) {
         Boolean validInput = false;
-        Pattern emailPattern = Pattern.compile("[\\.a-z0-9]{1,30}+[\\@]{1}[a-z0-9]{2,8}[\\.]{1}[a-z]{1,4}|");
+        Pattern emailPattern = Pattern.compile("[\\.a-z0-9]{1,30}+[\\@]{1}[a-z0-9]{2,8}[\\.]{1}[a-z]{1,6}|");
         while (!validInput) {
             email = System.console().readLine();
             Matcher emailMatch = emailPattern.matcher(email);
@@ -615,7 +608,7 @@ public final class ContactsApp implements Serializable {
                 validInput = true;
                 return email;
             } else {
-                System.out.println("Invalid e-mail address. Please give a legitimate one, or leave it empty");
+                System.out.println("Invalid e-mail address. Type it in lowercase, or leave it empty");
             }
         }
         return email;
