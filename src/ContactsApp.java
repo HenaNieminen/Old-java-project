@@ -305,7 +305,7 @@ public final class ContactsApp implements Serializable {
             while (!selected) {
                 try {
                     editIndex = Integer.parseInt(console.readLine());
-                    if (editIndex >= 0 && editIndex <= capacity) {
+                    if (editIndex >= 0 && editIndex < capacity) {
                         selected = true;
                     } else {
                         System.out.println("That slot is out of range");
