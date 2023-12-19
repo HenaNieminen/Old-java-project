@@ -257,6 +257,7 @@ public final class ContactsApp implements Serializable {
      * @param searchInput is a Contact object that goes through the arraylist
      * @param exit is used to control the while loop for the console input
      * @param indexTrack is used to amount the index where the target contact is
+     * @param countTrack is used to check how many contacts were logged into the editIndex
      * @param editIndex indexTrack is then applied to this value
      */
     public static void select() {
