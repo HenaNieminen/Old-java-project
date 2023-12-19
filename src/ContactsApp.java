@@ -315,9 +315,15 @@ public final class ContactsApp implements Serializable {
             while (!selected) {
                 try {
                     editIndex = Integer.parseInt(console.readLine());
-                    selected = true;
+                    if (editIndex >= 0 && editIndex <= capacity) {
+                        selected = true;
+                    } else {
+                        System.out.println("That slot is out of range");
+                    }
                 } catch (NumberFormatException e) {
                     System.out.println("Give the slot number of which contact to select");
+                } catch (Exception e) {
+                    System.out.println("Unexpected problem");
                 }
             }
         }
