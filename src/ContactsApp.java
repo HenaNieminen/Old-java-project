@@ -267,8 +267,7 @@ public final class ContactsApp implements Serializable {
         String searchName = "";
         //Index track will be used to see at which part of the arraylist the select method is at
         int indexTrack = 0;
-        int arrayTrack = 0;
-        int [] editArray = new int[capacity];
+        int countTrack = 0;
         found = false;
         Boolean exit = false;
         while (!exit) {
@@ -290,20 +289,15 @@ public final class ContactsApp implements Serializable {
             if (searchInput.getFirstName().equals(searchName)) {
                 System.out.println("Slot " + indexTrack + ": " + searchInput);
                 for (int i = 0; i < capacity; i++) {
-                    editArray[i] += indexTrack;
                     editIndex = indexTrack;
                     found = true;
                 }
-                arrayTrack++;
-                //arrayTrack keeps count of how many contacts were logged into the editArray. Editarray
-                //will also have a check for userinput to see if the correct index was on the array
-                //Edit index is to keep track of singular objects if multiple are not found.
-                //It is also the main selection for editing and deleting once multiple first name
-                //situation has been solved
+                countTrack++;
+                //countTrack keeps count of how many contacts were logged into the editIndex.
             }
             indexTrack++;
         }
-        if (arrayTrack > 1) {
+        if (countTrack > 1) {
             boolean selected = false;
             System.out.println("--------------------");
             System.out.println("Which " + searchName + " do you want to select? Enter their slot on the list");
@@ -347,6 +341,8 @@ public final class ContactsApp implements Serializable {
         while (!exit) {
             if (found) {
                 System.out.println("Are you sure you want to delete this contact? y/n?");
+                System.out.println(contactsList.get(editIndex));
+                System.out.println("---------------");
                 String userChoice = System.console().readLine();
                 switch (userChoice.toLowerCase()) {
                     case "y":
