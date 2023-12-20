@@ -289,10 +289,8 @@ public final class ContactsApp implements Serializable {
             Contact searchInput = (Contact)lister.next();
             if (searchInput.getFirstName().equals(searchName)) {
                 System.out.println("Slot " + indexTrack + ": " + searchInput);
-                for (int i = 0; i < capacity; i++) {
-                    editIndex = indexTrack;
-                    found = true;
-                }
+                editIndex = indexTrack;
+                found = true;
                 countTrack++;
                 //countTrack keeps count of how many contacts were logged into the editIndex.
             }
