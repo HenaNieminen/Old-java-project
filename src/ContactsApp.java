@@ -24,7 +24,6 @@ public final class ContactsApp implements Serializable {
     public static ObjectInputStream ois;
     public static ListIterator lister;
     public static boolean found;
-    public static int [] editArray = new int[1];
     public static int editIndex;
 
     /**
