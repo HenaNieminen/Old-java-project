@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
 
 /**
  * Contact class contains the object which will be saved to the file
