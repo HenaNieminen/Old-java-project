@@ -393,7 +393,8 @@ public final class ContactsApp implements Serializable {
                 System.out.println("How do you want to edit this contact?");
                 System.out.println(contactsList.get(editIndex));
                 System.out.println("---------------");
-                System.out.println("1. ID, 2. First name, 3. Last name, 4. Phone number, 5. Address, 6. Email 7. Exit");
+                System.out.println("1. ID, 2. First name, 3. Last name," 
+                + " 4. Phone number, 5. Address, 6. Email 7. Exit");
                 
                 String userChoice = System.console().readLine();
                 switch (userChoice) {
@@ -482,7 +483,8 @@ public final class ContactsApp implements Serializable {
         Boolean validInput = false;
         //Getting the validation to take into attention specific months may take time, but the capture group for specific day ranges
         //is way better than just allowing 39 days in a month. Or 19 months in a year
-        Pattern idPattern = Pattern.compile("(?:[0-2]{1}[0-9]{1}|[3]{1}[0-1]{1})(?:[0]{1}[0-9]{1}|[1][0-2]{1})[0-9]{2}[\\+|\\-|A|Y]{1}[0-9]{3}[A-Z0-9]{1}");
+        Pattern idPattern = Pattern.compile("(?:[0-2]{1}[0-9]{1}|[3]{1}[0-1]{1})(?:[0]{1}[0-9]{1}|[1][0-2]{1})[0-9]"
+        + "{2}[\\+|\\-|A|Y|X|W|V|U|B|C|D|E|F]{1}[0-9]{3}[A-Z0-9]{1}");
         while (!validInput) {
             id = System.console().readLine();
             Matcher idMatch = idPattern.matcher(id);
