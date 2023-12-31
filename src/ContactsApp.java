@@ -549,14 +549,17 @@ public final class ContactsApp implements Serializable {
     public static String phoneNumberInput(String phone) {
         Boolean validInput = false;
         Pattern phonePattern = Pattern.compile("\\+358(?:40|41|42|43|44|45|46|49|50)[0-9]{7}");
+        phone = "+358";
         while (!validInput) {
-            phone = System.console().readLine();
+            System.out.print(phone);
+            phone += System.console().readLine();
             Matcher phoneMatch = phonePattern.matcher(phone);
             if (phoneMatch.matches()) {
                 validInput = true;
                 return phone;
             } else {
-                System.out.println("Invalid phone number, use the +358 format and proper length");
+                System.out.println("Invalid phone number, make sure it is the right length");
+                phone = "+358";
             }
         }
         return phone;
