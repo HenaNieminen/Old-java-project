@@ -6,6 +6,7 @@ Screencast link (Dropbox):
 
 https://www.dropbox.com/scl/fi/iunvgayj3peorrybl03l9/Screencast-Henri-Nieminen.mp4?rlkey=1rseoe4p0hnyjqwj4jv693gcx&dl=0
 
+## Introduction
 This is my Contact management app programmed in java. It can store various information from a given subject. Including:
 
 -ID (Finnish SSN)
@@ -25,13 +26,13 @@ The user interface is comprised solely of CLI and is navigated using prompts and
 edit saved contacts. When a contact is added, it will generate a file into the source folder of the compiled program.
 
 
-How to compile and run:
+## How to compile and run:
 
 cd src/ && javac *.java && java ContactsApp
 
 
 
-Known issues and bugs:
+## Known issues and bugs:
 
 -The file generated from the program is very prone to corruption and IOexceptions. It is advised to not touch the file or edit it outside the program
 
@@ -43,7 +44,7 @@ Known issues and bugs:
 umlauted characters are not accepted, etc.
 
 
-Fixed after screencast:
+## Fixed after screencast:
 
 -Phone validation
 
@@ -52,6 +53,6 @@ Fixed after screencast:
 -User can now safely store people with same given names.
 
 
-Updated self evaluation:
+### Updated self evaluation:
 
 I'd bump up my self evaluation from the intial 1-2 to 2-3 after these fixes.
