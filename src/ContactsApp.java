@@ -152,29 +152,34 @@ public final class ContactsApp implements Serializable {
          * This method will use the input methods for user validation and then create
          * an object into the file using the writeToFile method.
          */
+            boolean abortion = false;
             String id = "";
             String firstName = "";
             String lastName = "";
             String phoneNumber = "";
             String address = "";
             String email = "";
-            System.out.println("Give the ID of the contact");
-            id = idInput(id);
-            System.out.println("Give the first name");
-            firstName = firstNameInput(firstName);
-            System.out.println("Give the last name");
-            lastName = lastNameInput(lastName);
-            System.out.println("Give the phone number");
-            phoneNumber = phoneNumberInput(phoneNumber);
-            System.out.println("(Opt.)Give the address");
-            address = addressInput(address);
-            System.out.println("(Opt.) Give the email");
-            email = emailInput(email);
-            System.out.println("Contact added!");
-            contactsList.add(new Contact(id, firstName, lastName, phoneNumber, address, email));
-            writeToFile();
-            System.out.println("-----------------");
-            userConfirm();
+
+            while(!abortion) {
+                System.out.println("Give the ID of the contact");
+                id = userInput(id,1);
+                System.out.println("Give the first name");
+                firstName = userInput(firstName,2);
+                System.out.println("Give the last name");
+                lastName = userInput(lastName,3);
+                System.out.println("Give the phone number");
+                phoneNumber = userInput(phoneNumber,4);
+                System.out.println("(Opt.)Give the address");
+                address = userInput(address,5);
+                System.out.println("(Opt.) Give the email");
+                email = userInput(email,6);
+                System.out.println("Contact added!");
+                contactsList.add(new Contact(id, firstName, lastName, phoneNumber, address, email));
+                writeToFile();
+                System.out.println("-----------------");
+                userConfirm();
+                abortion = true;
+            }
     }
     /**
      * readContact method is used to read from the filled arraylist
@@ -401,7 +406,7 @@ public final class ContactsApp implements Serializable {
                     case "1":
                         String newId = "";
                         System.out.println("Enter the new ID");
-                        newId = idInput(newId);
+                        newId = userInput(newId,1);
                         contactsList.get(editIndex).setId(newId);
                         writeToFile();
                         System.out.println("ID updated!");
@@ -411,7 +416,7 @@ public final class ContactsApp implements Serializable {
                     case "2":
                         String newFirst = "";
                         System.out.println("Enter the new first name");
-                        newFirst = firstNameInput(newFirst);
+                        newFirst = userInput(newFirst,2);
                         contactsList.get(editIndex).setFirstName(newFirst);
                         writeToFile();
                         System.out.println("First name updated!");
@@ -421,7 +426,7 @@ public final class ContactsApp implements Serializable {
                     case "3":
                         String newLast = "";
                         System.out.println("Enter the new last name");
-                        newLast = lastNameInput(newLast);
+                        newLast = userInput(newLast,3);
                         contactsList.get(editIndex).setLastName(newLast);
                         writeToFile();
                         System.out.println("Last name updated!");
@@ -431,7 +436,7 @@ public final class ContactsApp implements Serializable {
                     case "4":
                         String newPhone = "";
                         System.out.println("Enter the new Phone number");
-                        newPhone = phoneNumberInput(newPhone);
+                        newPhone = userInput(newPhone,4);
                         contactsList.get(editIndex).setPhoneNumber(newPhone);
                         writeToFile();
                         System.out.println("Phone number updated!");
@@ -441,7 +446,7 @@ public final class ContactsApp implements Serializable {
                     case "5":
                         String newAddress = "";
                         System.out.println("Enter the new Address");
-                        newAddress = addressInput(newAddress);
+                        newAddress = userInput(newAddress,5);
                         contactsList.get(editIndex).setAddress(newAddress);
                         writeToFile();
                         System.out.println("Address updated!");
@@ -451,7 +456,7 @@ public final class ContactsApp implements Serializable {
                     case "6":
                         String newEmail = "";
                         System.out.println("Enter the new email");
-                        newEmail = emailInput(newEmail);
+                        newEmail = userInput(newEmail,6);
                         contactsList.get(editIndex).setEmail(newEmail);
                         writeToFile();
                         System.out.println("Email updated!");
@@ -460,6 +465,9 @@ public final class ContactsApp implements Serializable {
                         break;
                     case "7":
                         exit = true;
+                        break;
+                    case "8":
+                        System.out.println("Aborted editing");
                         break;
                     default :
                         System.out.println("Invalid input");
@@ -472,142 +480,97 @@ public final class ContactsApp implements Serializable {
             }
         }
     }
-    /**
-     * idInput is the method for inputting and checking an SSN number for the contact
-     * @param idPattern is the regex pattern for the ID
-     * @param idMatch is the regex matcher for the ID
-     * @param id is the recieved parameter of the ID
-     * @return the method returns the set ID back
-     */
-    public static String idInput(String id) {
+    //This looks really fucking stupid, but decided to take a crack at getting all the inputs under one method
+    public static String userInput(String anything, int selector) {
         Boolean validInput = false;
-        //Getting the validation to take into attention specific months may take time, but the capture group for specific day ranges
-        //is way better than just allowing 39 days in a month. Or 19 months in a year
         Pattern idPattern = Pattern.compile("(?:[0-2]{1}[0-9]{1}|[3]{1}[0-1]{1})(?:[0]{1}[0-9]{1}|[1][0-2]{1})[0-9]"
         + "{2}[\\+|\\-|A|Y|X|W|V|U|B|C|D|E|F]{1}[0-9]{3}[A-Z0-9]{1}");
-        while (!validInput) {
-            id = System.console().readLine();
-            Matcher idMatch = idPattern.matcher(id);
-            if (idMatch.matches()) {
-                validInput = true;
-                return id;
-            } else {
-                System.out.println("Invalid ID. Give a legitimate Finnish SSN");
-            }
-        }
-        return id;
-    }
-    /**
-     * firstNameInput is the method for inputtting and checking the first name for the contact
-     * @param firstNamePattern is the regex pattern for the first name
-     * @param firstNameMatch is the regex matcher for the first name
-     * @param first is the recieved parameter of the first name
-     * @return the method returns the inputted name back
-     */
-    public static String firstNameInput(String first) {
-        Boolean validInput = false;
         Pattern firstNamePattern = Pattern.compile("[A-Z]{1}[a-zA-Z\\- ]{1,11}");
-        while (!validInput) {
-            first = System.console().readLine();
-            Matcher firstNameMatch = firstNamePattern.matcher(first);
-            if (firstNameMatch.matches()) {
-                validInput = true;
-                return first;
-            } else {
-                System.out.println("Invalid first name. Capitalize the first letter and keep the size between 2-12 letters");
-            }
-        }
-        return first;
-    }
-    /**
-     * lastNameInput is the method for inputting and checking the last name for the contact.
-     * @param lastNamePattern is the regex pattern for the last name
-     * @param lastNameMatch is the regex matcher for the last name
-     * @param last is the reciecved paramter of the last name
-     * @return the method returns the inputted surname back
-     */
-    public static String lastNameInput(String last) {
-        Boolean validInput = false;
         Pattern lastNamePattern = Pattern.compile("[A-Z]{1}[a-zA-Z\\- ]{1,20}");
-        while (!validInput) {
-            last = System.console().readLine();
-            Matcher lastNameMatch = lastNamePattern.matcher(last);
-            if (lastNameMatch.matches()) {
-                validInput = true;
-                return last;
-            } else {
-                System.out.println("Invalid last name. Capitalize the first letter and keep the size between 2-20 letters");
-            }
-        }
-        return last;
-    }
-    /**
-     * phoneNumberInput is the method for inputting and checking the phone number for the contact.
-     * @param phonePattern is the regex pattern for the number
-     * @param phoneMatch is the regex matcher for the number
-     * @param phone is the recieved parameter of the phonenumber
-     * @return the method returns the inputted phone number back
-     */
-    public static String phoneNumberInput(String phone) {
-        Boolean validInput = false;
         Pattern phonePattern = Pattern.compile("\\+358(?:40|41|42|43|44|45|46|49|50)[0-9]{7}");
-        phone = "+358";
-        while (!validInput) {
-            System.out.print(phone);
-            phone += System.console().readLine();
-            Matcher phoneMatch = phonePattern.matcher(phone);
-            if (phoneMatch.matches()) {
-                validInput = true;
-                return phone;
-            } else {
-                System.out.println("Invalid phone number, make sure it is the right length");
-                phone = "+358";
-            }
-        }
-        return phone;
-    }
-    /**
-     * addressInput is the method for inputting and checking the phone number for the contact.
-     * @param addressPattern is the regex pattern for the address
-     * @param addresssMatch is the regex matcher for the address
-     * @param address is the recieved paramter of the address
-     * @return the method returns the inputted address
-     */
-    public static String addressInput(String address) {
-        Boolean validInput = false;
         Pattern addressPattern = Pattern.compile("[A-Z]{1}[a-zA-Z0-9 ]{1,40}|");
-        while (!validInput) {
-            address = System.console().readLine();
-            Matcher addressMatch = addressPattern.matcher(address);
-            if (addressMatch.matches()) {
-                validInput = true;
-                return address;
-            } else {
-                System.out.println("Invalid address. Please give a legitimate one, or leave it empty");
-            }
-        }
-        return address;
-    }
-    /**
-     * addressInput is the method for inputting and checking the phone number for the contact.
-     * @param emailPattern is the regex pattern for the email address
-     * @param emailMatch is the regex matcher for the email address
-     * @param email is the recieved parameter of the email
-     * @return the method returns the inputted email address
-     */
-    public static String emailInput(String email) {
-        Boolean validInput = false;
         Pattern emailPattern = Pattern.compile("[\\.a-z0-9]{1,30}+[\\@]{1}[a-z0-9]{2,8}[\\.]{1}[a-z]{1,6}|");
-        while (!validInput) {
-            email = System.console().readLine();
-            Matcher emailMatch = emailPattern.matcher(email);
-            if (emailMatch.matches()) {
-                validInput = true;
-                return email;
-            } else {
-                System.out.println("Invalid e-mail address. Type it in lowercase, or leave it empty");
-            }
+
+        switch (selector) {
+            case 1:
+                while (!validInput) {
+                    anything = System.console().readLine();
+                    Matcher idMatch = idPattern.matcher(anything);
+                    if (idMatch.matches()) {
+                        validInput = true;
+                        return anything;
+                    } else {
+                        System.out.println("Invalid ID. Give a legitimate Finnish SSN");
+                    }
+                }
+                break;
+            case 2:
+                while (!validInput) {
+                    anything = System.console().readLine();
+                    Matcher firstNameMatch = firstNamePattern.matcher(anything);
+                    if (firstNameMatch.matches()) {
+                        validInput = true;
+                        return anything;
+                    } else {
+                        System.out.println("Invalid first name. Capitalize the first letter and keep the size between 2-12 letters");
+                    }
+                }
+                break;
+            case 3:
+                while (!validInput) {
+                    anything = System.console().readLine();
+                    Matcher lastNameMatch = lastNamePattern.matcher(anything);
+                    if (lastNameMatch.matches()) {
+                        validInput = true;
+                        return anything;
+                    } else {
+                        System.out.println("Invalid last name. Capitalize the first letter and keep the size between 2-20 letters");
+                    }
+                }
+                break;
+            case 4:
+                while (!validInput) {
+                    System.out.print(anything);
+                    anything += System.console().readLine();
+                    Matcher phoneMatch = phonePattern.matcher(anything);
+                    if (phoneMatch.matches()) {
+                        validInput = true;
+                        return anything;
+                    } else {
+                        System.out.println("Invalid phone number, make sure it is the right length");
+                        anything = "+358";
+                    }
+                }
+                break;
+            case 5:
+                while (!validInput) {
+                    anything = System.console().readLine();
+                    Matcher addressMatch = addressPattern.matcher(anything);
+                    if (addressMatch.matches()) {
+                        validInput = true;
+                        return anything;
+                    } else {
+                        System.out.println("Invalid address. Please give a legitimate one, or leave it empty");
+                    }
+                }
+                break;
+            case 6:
+                while (!validInput) {
+                    anything = System.console().readLine();
+                    Matcher emailMatch = emailPattern.matcher(anything);
+                    if (emailMatch.matches()) {
+                        validInput = true;
+                        return anything;
+                    } else {
+                    System.out.println("Invalid e-mail address. Type it in lowercase, or leave it empty");
+                    }
+                }
+            case 7:
+                break;
+            default:
+                System.out.println("How did you even get here?");
+                break;
         }
-        return email;
+        return anything;
     }
 }
