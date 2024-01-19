@@ -163,16 +163,46 @@ public final class ContactsApp implements Serializable {
             while(!abortion) {
                 System.out.println("Give the ID of the contact");
                 id = userInput(id,1);
+                if (checkExit(id)) {
+                    System.out.println("Addition aborted");
+                    userConfirm();
+                    break;
+                }
                 System.out.println("Give the first name");
                 firstName = userInput(firstName,2);
+                if (checkExit(firstName)) {
+                    System.out.println("Addition aborted");
+                    userConfirm();
+                    break;
+                }
                 System.out.println("Give the last name");
                 lastName = userInput(lastName,3);
+                if (checkExit(lastName)) {
+                    System.out.println("Addition aborted");
+                    userConfirm();
+                    break;
+                }
                 System.out.println("Give the phone number");
                 phoneNumber = userInput(phoneNumber,4);
+                if (checkExit(phoneNumber)) {
+                    System.out.println("Addition aborted");
+                    userConfirm();
+                    break;
+                }
                 System.out.println("(Opt.)Give the address");
                 address = userInput(address,5);
+                if (checkExit(address)) {
+                    System.out.println("Addition aborted");
+                    userConfirm();
+                    break;
+                }
                 System.out.println("(Opt.) Give the email");
                 email = userInput(email,6);
+                if (checkExit(email)) {
+                    System.out.println("Addition aborted");
+                    userConfirm();
+                    break;
+                }
                 System.out.println("Contact added!");
                 contactsList.add(new Contact(id, firstName, lastName, phoneNumber, address, email));
                 writeToFile();
@@ -407,6 +437,11 @@ public final class ContactsApp implements Serializable {
                         String newId = "";
                         System.out.println("Enter the new ID");
                         newId = userInput(newId,1);
+                        if (checkExit(newId)) {
+                            System.out.println("Edit aborted");
+                            userConfirm();
+                            break;
+                        }
                         contactsList.get(editIndex).setId(newId);
                         writeToFile();
                         System.out.println("ID updated!");
@@ -417,6 +452,11 @@ public final class ContactsApp implements Serializable {
                         String newFirst = "";
                         System.out.println("Enter the new first name");
                         newFirst = userInput(newFirst,2);
+                        if (checkExit(newFirst)) {
+                            System.out.println("Edit aborted");
+                            userConfirm();
+                            break;
+                        }
                         contactsList.get(editIndex).setFirstName(newFirst);
                         writeToFile();
                         System.out.println("First name updated!");
@@ -427,6 +467,11 @@ public final class ContactsApp implements Serializable {
                         String newLast = "";
                         System.out.println("Enter the new last name");
                         newLast = userInput(newLast,3);
+                        if (checkExit(newLast)) {
+                            System.out.println("Edit aborted");
+                            userConfirm();
+                            break;
+                        }
                         contactsList.get(editIndex).setLastName(newLast);
                         writeToFile();
                         System.out.println("Last name updated!");
@@ -437,6 +482,11 @@ public final class ContactsApp implements Serializable {
                         String newPhone = "";
                         System.out.println("Enter the new Phone number");
                         newPhone = userInput(newPhone,4);
+                        if (checkExit(newPhone)) {
+                            System.out.println("Edit aborted");
+                            userConfirm();
+                            break;
+                        }
                         contactsList.get(editIndex).setPhoneNumber(newPhone);
                         writeToFile();
                         System.out.println("Phone number updated!");
@@ -447,6 +497,11 @@ public final class ContactsApp implements Serializable {
                         String newAddress = "";
                         System.out.println("Enter the new Address");
                         newAddress = userInput(newAddress,5);
+                        if (checkExit(newAddress)) {
+                            System.out.println("Edit aborted");
+                            userConfirm();
+                            break;
+                        }
                         contactsList.get(editIndex).setAddress(newAddress);
                         writeToFile();
                         System.out.println("Address updated!");
@@ -457,6 +512,11 @@ public final class ContactsApp implements Serializable {
                         String newEmail = "";
                         System.out.println("Enter the new email");
                         newEmail = userInput(newEmail,6);
+                        if (checkExit(newEmail)) {
+                            System.out.println("Edit aborted");
+                            userConfirm();
+                            break;
+                        }
                         contactsList.get(editIndex).setEmail(newEmail);
                         writeToFile();
                         System.out.println("Email updated!");
@@ -465,9 +525,6 @@ public final class ContactsApp implements Serializable {
                         break;
                     case "7":
                         exit = true;
-                        break;
-                    case "8":
-                        System.out.println("Aborted editing");
                         break;
                     default :
                         System.out.println("Invalid input");
@@ -499,6 +556,9 @@ public final class ContactsApp implements Serializable {
                     if (idMatch.matches()) {
                         validInput = true;
                         return anything;
+                    } else if (checkExit(anything)) {
+                        selector = 7;
+                        break;
                     } else {
                         System.out.println("Invalid ID. Give a legitimate Finnish SSN");
                     }
@@ -511,6 +571,9 @@ public final class ContactsApp implements Serializable {
                     if (firstNameMatch.matches()) {
                         validInput = true;
                         return anything;
+                    } else if (checkExit(anything)) {
+                        selector = 7;
+                        break;
                     } else {
                         System.out.println("Invalid first name. Capitalize the first letter and keep the size between 2-12 letters");
                     }
@@ -523,6 +586,9 @@ public final class ContactsApp implements Serializable {
                     if (lastNameMatch.matches()) {
                         validInput = true;
                         return anything;
+                    } else if (checkExit(anything)) {
+                        selector = 7;
+                        break;
                     } else {
                         System.out.println("Invalid last name. Capitalize the first letter and keep the size between 2-20 letters");
                     }
@@ -536,6 +602,9 @@ public final class ContactsApp implements Serializable {
                     if (phoneMatch.matches()) {
                         validInput = true;
                         return anything;
+                    } else if (checkExit(anything)) {
+                        selector = 7;
+                        break;
                     } else {
                         System.out.println("Invalid phone number, make sure it is the right length");
                         anything = "+358";
@@ -549,6 +618,9 @@ public final class ContactsApp implements Serializable {
                     if (addressMatch.matches()) {
                         validInput = true;
                         return anything;
+                    } else if (checkExit(anything)) {
+                        selector = 7;
+                        break;
                     } else {
                         System.out.println("Invalid address. Please give a legitimate one, or leave it empty");
                     }
@@ -561,6 +633,9 @@ public final class ContactsApp implements Serializable {
                     if (emailMatch.matches()) {
                         validInput = true;
                         return anything;
+                    } else if (checkExit(anything)) {
+                        selector = 7;
+                        break;
                     } else {
                     System.out.println("Invalid e-mail address. Type it in lowercase, or leave it empty");
                     }
@@ -572,5 +647,12 @@ public final class ContactsApp implements Serializable {
                 break;
         }
         return anything;
+    }
+    public static boolean checkExit(String input) {
+        if (input.equalsIgnoreCase("exit")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
