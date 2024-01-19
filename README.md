@@ -24,7 +24,7 @@ edit saved contacts. When a contact is added, it will generate a file into the s
 
 ## What is this?
 
-An old school project that I decided to make public on my profile. Forks are not appreciated.
+An old school project that I decided to archive on my profile. 
 
 
 
