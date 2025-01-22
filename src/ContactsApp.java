@@ -424,6 +424,7 @@ public final class ContactsApp implements Serializable {
             select();
         }
         while (!exit) {
+            //Excuse me while I puke. This looks gnarly
             if (found) {
                 System.out.println("How do you want to edit this contact?");
                 System.out.println(contactsList.get(editIndex));
@@ -537,7 +538,7 @@ public final class ContactsApp implements Serializable {
             }
         }
     }
-    //This looks really fucking stupid, but decided to take a crack at getting all the inputs under one method
+    //This looks really fucking stupid and is very stupid. I would have done this a lot better now with more experience
     public static String userInput(String anything, int selector) {
         Boolean validInput = false;
         Pattern idPattern = Pattern.compile("(?:[0-2]{1}[0-9]{1}|[3]{1}[0-1]{1})(?:[0]{1}[0-9]{1}|[1][0-2]{1})[0-9]"
@@ -549,6 +550,7 @@ public final class ContactsApp implements Serializable {
         Pattern emailPattern = Pattern.compile("[\\.a-z0-9]{1,30}+[\\@]{1}[a-z0-9]{2,8}[\\.]{1}[a-z]{1,6}|");
 
         switch (selector) {
+                //Case one is for ID checking
             case 1:
                 while (!validInput) {
                     anything = System.console().readLine();
@@ -564,6 +566,7 @@ public final class ContactsApp implements Serializable {
                     }
                 }
                 break;
+                //Case two is for first names
             case 2:
                 while (!validInput) {
                     anything = System.console().readLine();
@@ -579,6 +582,7 @@ public final class ContactsApp implements Serializable {
                     }
                 }
                 break;
+                //Case three is for last names
             case 3:
                 while (!validInput) {
                     anything = System.console().readLine();
@@ -594,6 +598,7 @@ public final class ContactsApp implements Serializable {
                     }
                 }
                 break;
+                //Case four is for phones
             case 4:
                 while (!validInput) {
                     System.out.print(anything);
@@ -611,6 +616,7 @@ public final class ContactsApp implements Serializable {
                     }
                 }
                 break;
+                //Case five is for addresses
             case 5:
                 while (!validInput) {
                     anything = System.console().readLine();
@@ -626,6 +632,7 @@ public final class ContactsApp implements Serializable {
                     }
                 }
                 break;
+                //Case six is for emails
             case 6:
                 while (!validInput) {
                     anything = System.console().readLine();
@@ -640,6 +647,7 @@ public final class ContactsApp implements Serializable {
                     System.out.println("Invalid e-mail address. Type it in lowercase, or leave it empty");
                     }
                 }
+                //This looks like an empty case. No clue why it is there and afraid of deleting it in case it breaks
             case 7:
                 break;
             default:
@@ -648,6 +656,7 @@ public final class ContactsApp implements Serializable {
         }
         return anything;
     }
+    //I don't even know what's the point of this. You can just check it where you need to XD
     public static boolean checkExit(String input) {
         if (input.equalsIgnoreCase("exit")) {
             return true;
