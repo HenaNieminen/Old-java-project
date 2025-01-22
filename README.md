@@ -24,7 +24,7 @@ edit saved contacts. When a contact is added, it will generate a file into the s
 
 ## What is this?
 
-An old school project that I decided to archive on my profile. 
+An old school project from an introduction course for programming that I decided to archive on my profile. 
 
 Grade given: 3
 
